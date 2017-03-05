@@ -61,6 +61,8 @@ $route['register'] = 'user/register';
 
 $route['login/logout'] = 'login/logout';
 
+$route['cursor/(\d+)'] = 'cursor/index/$1';
+
 // 教师端
 // $route['teacher/login'] = 'teacher/login';
 // $route['teacher/logout'] = 'teacher/logout';
