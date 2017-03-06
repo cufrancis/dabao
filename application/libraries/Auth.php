@@ -28,6 +28,60 @@ class Auth {
     }
 
     /**
+     * 已登录用户是否是教师
+     * @return boolean [description]
+     */
+    public function is_teacher(){
+        $this->CI->load->library("session");
+        $this->CI->load->database();
+        $this->CI->load->model('user_model');
+
+        if ($this->CI->session->user['type'] == 1){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 检查课程所有者
+     * @return [type] [description]
+     */
+    public function check_owner($cursor_id){
+        $this->CI->load->library("session");
+
+        $this->CI->load->database();
+
+        $query = $this->CI->db->select('*')->from('cursor')
+                                ->where('teacher_id', $this->CI->session->user['id'])
+                                ->get();
+        // $data =
+        if (isset($query->result()[0])){
+            return true;
+        } else {
+            $this->CI->load->helper("url");
+            $this->CI->load->library("session");
+
+            $this->CI->session->message = '无权限！';
+            $this->CI->session->mark_as_flash('message');
+            redirect('/');
+        }
+        // print_r($this->CI->session->user['teacher_id']);
+        // print_r($data);
+    }
+
+    public function check_teacher(){
+        if ($this->is_teacher() == false){
+            $this->CI->load->helper("url");
+            $this->CI->load->library("session");
+
+            $this->CI->session->message = '无权限！';
+            $this->CI->session->mark_as_flash('message');
+            redirect('/');
+        }
+    }
+
+    /**
      * 检验是否登录
      * 如果登录,跳过处理,未登录则跳转到登录页面
      * @return [type] [description]

@@ -27,4 +27,8 @@ class User_model extends CI_Model{
         return $query->result()[0];
     }
 
+    public function is_teacher($id){
+        // $query = $this->db->select()
+    }
+
 }

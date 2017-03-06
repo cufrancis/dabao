@@ -16,6 +16,7 @@ class Teacher extends CI_Controller {
 		$this->load->library('Auth');
 
 		$this->auth->check_login();
+		$this->auth->is_teacher();
 
 		# 教师所创建的课程列表
 		$this->load->database();

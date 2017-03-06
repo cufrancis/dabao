@@ -61,7 +61,15 @@ $route['register'] = 'user/register';
 
 $route['login/logout'] = 'login/logout';
 
+// 课程详情
 $route['cursor/(\d+)'] = 'cursor/index/$1';
+// 课程修改
+$route['cursor/(\d+)/edit'] = 'cursor/edit/$1';
+// 课程更新
+$route['cursor/(\d+)/update'] = 'cursor/update/$1';
+
+// 上传视频
+$route['cursor/(\d+)/upload'] = 'cursor/upload/$1';
 
 // 教师端
 // $route['teacher/login'] = 'teacher/login';

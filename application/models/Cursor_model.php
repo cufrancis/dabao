@@ -8,6 +8,7 @@ class Cursor_model extends CI_Model{
     public $updated_at; // 更新时间
     public $finished_at; // 结束时间
     public $teacher_id; // 教师id
+    public $desc;
 
     public function __construct(){
         parent::__construct();
@@ -20,12 +21,60 @@ class Cursor_model extends CI_Model{
      * @return [type]       [description]
      */
     public function getCursorInfo($id, $type='*'){
-        // $sql = "SELECT * from `cursor` WHERE `id` = ? limit 0,1";
-        // $query = $this->db->query($sql, array((int)$id));
 
         $query = $this->db->select($type)->from('cursor')->where('id', (int)$id)->get();
+        $cursor = $query->result()[0];
 
-        return $query->result()[0];
+        // 转换unixa时间戳为人类可读形式
+        $this->load->helper('date');
+        $format = 'DATE_ATOM';
+        $cursor->created_at = standard_date($format,$cursor->created_at);
+        $cursor->updated_at = standard_date($format,$cursor->updated_at);
+        $cursor->finished_at = standard_date($format,$cursor->finished_at);
+
+        return $cursor;
+    }
+
+    public function get_video_of_cursor($cursor_id){
+        $this->load->database();
+        $query = $this->db->select('*')
+                            ->from('video')
+                            ->where('cursor_id', (int)$cursor_id)
+                            ->get();
+
+        // print_r($query->result());
+        $data = $query->result();
+        return $data;
+    }
+
+    // 添加视频
+    public function add_video($cursor_id, $data){
+        $this->load->database();
+
+        $path = './uploads/';
+
+        $data = array(
+            "cursor_id" => $cursor_id,
+            'url'   =>  $path.$data['file_name'],
+            'name'  => $data['file_name'],
+        );
+        $result = $this->db->insert('video',$data);
+
+        return $result;
+
+    }
+
+    /**
+     * 更新数据
+     * @param  [type] $cursor_id [description]
+     * @param  [type] $data      [description]
+     * @return [type]            [description]
+     */
+    public function update($cursor_id, $data){
+        $this->load->database();
+
+        // $this->db->where('id', $cursor_id);
+        return $this->db->update('cursor', $data, "id = $cursor_id");
     }
 
 }
