@@ -71,6 +71,8 @@ $route['cursor/(\d+)/update'] = 'cursor/update/$1';
 // 上传视频
 $route['cursor/(\d+)/upload'] = 'cursor/upload/$1';
 
+$route['reset_password'] = 'user/reset_password';
+
 // 教师端
 // $route['teacher/login'] = 'teacher/login';
 // $route['teacher/logout'] = 'teacher/logout';

@@ -114,6 +114,50 @@ class User extends CI_Controller {
 	}
 
 	/**
+	 * reset password
+	 */
+	public function reset_password(){
+		// 加载表单验证类，并设置验证条件
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('old_password', 'Password', "required");
+		$this->form_validation->set_rules('new_password', 'New_Password', 'required');
+
+		if ($this->form_validation->run() == FALSE){
+			// 验证不通过，显示重置密码页面
+			$this->load->view('header');
+			$this->load->view('user/reset_password');
+			$this->load->view('footer');
+		} else {
+			// 验证通过，写入数据库
+			$username = $this->input->post('username');
+			$old_password = $this->input->post('old_password');
+			$new_password = $this->input->post('new_password');
+
+			// 表单提交后，从数据库中匹配用户名与旧密码是否一致，一致就将
+			// 新密码写入替换原来密码
+			$this->load->database();
+			$query = $this->db->select('*')
+								->from('user')
+								->where('username', $username)
+								->where('password', $old_password)
+								->get();
+			$result = $query->row_array();
+			if ($result){
+				// 旧密码和用户名匹配
+				$this->db->where('username', $username);
+				$this->db->update('user', array('password'=>$new_password));
+				echo "更新密码成功";
+			} else{
+				echo "密码或用户名错误";
+			}
+
+			// echo $old_password;
+		}
+
+	}
+
+	/**
 	 * 退出登录
 	 * @return [None] [无返回值]
 	 */
