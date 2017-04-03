@@ -158,6 +158,17 @@ class User extends CI_Controller {
 	}
 
 	/**
+	 * 接受参数并存入session
+	 * @param  [type] $vid [description]
+	 * @return [type]      [description]
+	 */
+	public function video_time($vid){
+		$this->load->library('session');
+
+
+	}
+
+	/**
 	 * 退出登录
 	 * @return [None] [无返回值]
 	 */

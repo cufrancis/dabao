@@ -144,7 +144,7 @@
             },
             autoUpload: false,
             validation: {
-                allowedExtensions: ['jpeg', 'jpg', 'gif', 'png', 'swf']
+                allowedExtensions: ['jpeg', 'jpg', 'gif', 'png', 'swf', 'mp4']
             }
         });
         $('#trigger-upload').click(function() {

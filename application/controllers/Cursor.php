@@ -47,7 +47,7 @@ class Cursor extends CI_Controller {
         // 课程所有的信息
         $cursor = $this->cursor_model->getCursorInfo($id);
         // 课程所有的视频
-        $videos = $this->video_model->get_video_of_cursor($id);
+        $videos = $this->cursor_model->get_video_of_cursor($id);
         // 课程所有的试题
         $questions = $this->question_model->get_question_of_cursor($id);
         print_r($videos);
@@ -88,7 +88,7 @@ class Cursor extends CI_Controller {
      */
     public function upload($cursor_id){
         $config['upload_path']      = './uploads/';
-        $config['allowed_types']    = 'gif|jpg|png|swf';
+        $config['allowed_types']    = 'gif|jpg|png|swf|mp4';
         // $config['max_size']     = 100;
         // $config['max_width']        = 1024;
         // $config['max_height']       = 768;
