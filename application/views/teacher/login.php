@@ -132,7 +132,7 @@
 <div class="row">
     <div class="col-md-offset-3 col-md-6">
         <form method="POST" class="form-horizontal">
-            <span class="heading">用户登录</span>
+            <span class="heading">教师登录</span>
             <div class="form-group">
                 <input type="text" name="username" class="form-control" id="inputEmail3" placeholder="用户名或电子邮件">
                 <i class="fa fa-user"></i>

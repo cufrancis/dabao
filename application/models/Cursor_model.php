@@ -61,8 +61,8 @@ class Cursor_model extends CI_Model{
         $result = $this->db->insert('video',$data);
 
         return $result;
-
     }
+
 
     /**
      * 更新数据
@@ -77,4 +77,26 @@ class Cursor_model extends CI_Model{
         return $this->db->update('cursor', $data, "id = $cursor_id");
     }
 
+    public function insert_comments($cursor_id, $data){
+        $this->load->database();
+        $insert = array(
+            "cursor_id" => $cursor_id,
+            "text" => $data['text'],
+            "created_at" => $data['created_at'],
+            "author_id" => $data['author_id'],
+        );
+        return $this->db->insert('cursor_comments', $insert);
+    }
+
+    public function get_all_comments($id){
+        $this->load->database();
+        $query = $this->db->select('*')
+                            ->from('cursor_comments')
+                            ->where('cursor_id', (int)$id)
+                            ->get();
+
+        // print_r($query->result());
+        $data = $query->result();
+        return $data;
+    }
 }

@@ -25,22 +25,28 @@
     </style>
 
 <div class="container">
-<h2><?php echo $cursor->name;?></h2>
+<h2>创建课程</h2>
 <hr />
-<form action="<?=site_url('course/'.$cursor->id.'/update');?>" class="dropzone" id="my-awesome-dropzone" method="POST">
+<form class="dropzone" id="my-awesome-dropzone" method="POST">
     <h3>基本信息</h3>
-    <p>课程名称:<input type="text" name="name" value="<?php echo $cursor->name;?>"></p>
-    <p>创建时间:<input type="text" name="created_at" value="<?php echo $cursor->created_at;?>"></p>
-    <p>结束时间:<input type="text" name="finished_at" value="<?php echo $cursor->finished_at;?>"></p>
+    <p>课程名称:<input type="text" name="name" value=""></p>
+    <!-- <p>创建时间:<input type="text" name="created_at" value=""></p>
+    <p>结束时间:<input type="text" name="finished_at" value=""></p> -->
+    所属年级 :
+    <div id="element_id">
+      <select class="grade" name="grade">
+      </select>
+      <select class="class" name="class"></select>
+    </div>
 
-    <p>课程介绍:<textarea name="desc"><?php echo $cursor->desc;?></textarea></p>
+    <p>课程介绍:<textarea name="desc"></textarea></p>
 
     <h3>课程所含视频</h3>
     <?php if (empty($videos)):?>
         暂无视频
     <?php else:?>
         <?php foreach ($videos as $video):?>
-            <a href="<?=site_url('video/'.$video->id);?>"><?php echo $video->name;?></a><br/>
+            <a href="/video/<?php echo $video->id;?>"><?php echo $video->name;?></a><br/>
         <?php endforeach;?>
     <?php endif;?>
     <!-- Fine Uploader DOM Element
@@ -51,7 +57,9 @@
 </form>
 </div>
 
-<!-- <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js"></script> -->
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+<script src="<?=base_url('resources/js/jquery.cxselect.js')?>"></script>
+<script src="<?=base_url('resources/js/fine-uploader/jquery.fine-uploader.min.js')?>"></script>
 <!-- Fine Uploader Gallery template
     ====================================================================== -->
     <script type="text/template" id="qq-template-gallery">
@@ -119,5 +127,79 @@
         </div>
     </script>
 
+
     <!-- Your code to create an instance of Fine Uploader and bind to the DOM/template
     ====================================================================== -->
+    <script>
+        $('#fine-uploader-gallery').fineUploader({
+            debug: true,
+            template: 'qq-template-gallery',
+            request: {
+                endpoint: '/cursor/upload'
+            },
+            retry:{
+                enableAuto: true,
+            },
+            deleteFile: {
+                enabled: true, // defaults to false
+                endpoint: '/my/delete/endpoint',
+            },
+            thumbnails: {
+                placeholders: {
+                    waitingPath: '<?=base_url('resources/image/fine-uploader/placeholders/waiting-generic.png')?>',
+                    notAvailablePath: '<?=base_url('resources/image/fine-uploader/placeholders/not_available-generic.png')?>'
+                }
+            },
+            autoUpload: false,
+            validation: {
+                allowedExtensions: ['jpeg', 'jpg', 'gif', 'png', 'swf', 'mp4']
+            }
+        });
+        $('#trigger-upload').click(function() {
+            $('#fine-uploader-gallery').fineUploader('uploadStoredFiles');
+       });
+
+    $('#element_id').cxSelect({
+      selects: ['grade', 'class'],
+      required: true,
+      jsonValue: 'v',
+      data: [
+        {'v': '01', 'n': '一年级 >', 's': [
+            {'v':'01', 'n':'(1)班'},
+            {'v':'02', 'n':'(2)班'},
+            {'v':'03', 'n':'(3)班'},
+            {'v':'04', 'n':'(4)班'},
+        ]},
+        {'v': '02', 'n': '二年级 >', 's': [
+            {'v':'01', 'n':'(1)班'},
+            {'v':'02', 'n':'(2)班'},
+            {'v':'03', 'n':'(3)班'},
+            {'v':'04', 'n':'(4)班'},
+        ]},
+        {'v': '03', 'n': '三年级 >', 's': [
+            {'v':'01', 'n':'(1)班'},
+            {'v':'02', 'n':'(2)班'},
+            {'v':'03', 'n':'(3)班'},
+            {'v':'04', 'n':'(4)班'},
+        ]},
+        {'v': '04', 'n': '四年级 >', 's': [
+            {'v':'01', 'n':'(1)班'},
+            {'v':'02', 'n':'(2)班'},
+            {'v':'03', 'n':'(3)班'},
+            {'v':'04', 'n':'(4)班'},
+        ]},
+        {'v': '05', 'n': '五年级 >', 's': [
+            {'v':'01', 'n':'(1)班'},
+            {'v':'02', 'n':'(2)班'},
+            {'v':'03', 'n':'(3)班'},
+            {'v':'04', 'n':'(4)班'},
+        ]},
+        {'v': '06', 'n': '六年级 >', 's': [
+            {'v':'01', 'n':'(1)班'},
+            {'v':'02', 'n':'(2)班'},
+            {'v':'03', 'n':'(3)班'},
+            {'v':'04', 'n':'(4)班'},
+        ]},
+    ]
+});
+    </script>

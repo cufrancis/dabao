@@ -1,17 +1,86 @@
-<div class="container">
-    <?php if (isset($this->session->user)):?>
-        <!-- 检测是否登录，如果登录了之后$this->session->user 存储的是用户信息-->
-        Welcome, <?php echo $this->session->user['username'];?><?php if ($this->session->user['type'] == 1){echo "(教师)";}else{echo "(学生)";}?>| <a href="/logout">Logout</a>
+<style type="text/css">
 
-        <ul>
-            <?php if($this->session->user['type'] == 1):?>
-                <li><a href="teacher/cursor">查看我所发布的课程</a></li>
-            <?php else:?>
-                <li>我参与的课程</li>
-                <li>我的评论</li>
-            <?php endif;?>
-        </ul>
+    .head{
+        width:1000px ;
+        height:100px;
+        margin-left: 140px;
+        background-image: url("/web/images/hd.jpg");
+
+         }
+     #h_right{
+        width: 80px;
+        height: 30px;
+        padding-right: 0px;
+        padding-bottom:5px;
+        float: right;
+
+    }
+    #gap{
+        width: 1000px;
+        height: 20px;
+        margin-left: 140px;
+        background-color: pink;
+    }
+    #bkgd{
+        width: 1000px;
+        height: 500px;
+        margin-left: 140px;
+        background-image: url("/web/images/bkgd.jpg");
+    }
+    #keqian{
+        width: 200px;
+        height: 200px;
+        float: left;
+        margin-left: 150px;
+        margin-top: 50px;
+        background-color: white;
+          }
+    #kehou{
+        float: right;
+       width: 200px;
+        height: 200px;
+        margin-right: 150px;
+         margin-top: 50px;
+        background-color: white;
+    }
+    .dabiaoti{
+        text-align: center；
+        font-size: 50px;
+        font-family: 宋体；
+    }
+</style>
+
+    <?php if (isset($this->session->user)):?>
+        <div class="jumbotron">
+          <h2>dabao's Education System!</h2>
+          <p>...</p>
+          <p><a class="btn btn-primary btn-lg" href="#system" role="button">Enter system</a></p>
+        </div>
+        <div class="row" id=system>
+            <!-- 栅格排版 -->
+            <div class="col-md-6">
+                <h2>课前预习</h2>
+                <p>课前预习介绍。。。。</p>
+                <p><a class="btn btn-default" href="<?=site_url('Course/before_class');?>">前往>></a></p>
+            </div>
+            <div class="col-md-6">
+                <h2>课后复习</h2>
+                <p>课后复习介绍。。。</p>
+                <p><a class="btn btn-default" href="<?=site_url('login/kehou');?>">前往>></a></p>
+            </div>
+        </div>
+    <?php elseif(isset($this->session->teacher)):?>
+        <!-- Teacher -->
+        <div class="row" id=system>
+            <div class="col-md-6">
+                <h2>课程管理</h2>
+                <p><a href="<?=site_url('teacher/course')?>" calss="btn btn-default">前往》》</a></p>
+            </div>
+            <div class="col-md-6">
+                <h2>学生管理</h2>
+            </div>
+
+        </div>
     <?php else:?>
-        <p><a href="/login">Login</a> | <a href="/register">Register</a></p>
+        <div class="alert alert-warning" role="alert">同学，请<a href="<?=site_url('login');?>">登陆</a>后再进行操作</div>
     <?php endif;?>
-</div>

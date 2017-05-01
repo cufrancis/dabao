@@ -29,7 +29,7 @@ class User extends CI_Controller {
 		// 通过自定义验证规则验证帐号和密码是否匹配，具体验证规则看ci手册
 		$this->form_validation->set_rules('password', 'Password', "required|callback_check_password[{$this->input->post('username')}]");
 
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 
 
 		if ($this->form_validation->run() == FALSE){
@@ -45,7 +45,7 @@ class User extends CI_Controller {
 			// 载入数据库类和session类
 			$this->load->database();
 			$this->load->library('session');
-			$this->load->helper('url');
+			// $this->load->helper('url');
 
 			// 单结果标准查询，只查询一条数据
 			$query = $this->db->select('*')
@@ -62,7 +62,7 @@ class User extends CI_Controller {
 			// 设置登录成功提示，并标记为flashdata数据（只显示一次的session数据，具体看ci的session类库）
 			// $this->session->message = '登录成功！';
 			// $this->session->mark_as_flash('msessage');
-			redirect('/');
+			redirect(site_url());
 		}
     }
 
@@ -105,7 +105,7 @@ class User extends CI_Controller {
 			if ($result){
 				$this->session->message = '注册成功！';
 				$this->session->mark_as_flash('message');
-				redirect('/');
+				redirect(site_url());
 			}else {
 				$this->session->message = '注册失败，请联系管理员';
 				$this->session->mark_as_flash('message');
@@ -178,7 +178,7 @@ class User extends CI_Controller {
 		$this->session->message = '注销成功！';
 		$this->session->mark_as_flash('message');
 		$this->load->helper('url');
-		redirect('/');
+		redirect(site_url());
 	}
 
 	/**
@@ -243,6 +243,22 @@ class User extends CI_Controller {
 			return False;
 		}else {
 			return True;
+		}
+	}
+
+	public function ajax_view_video(){
+		$vid = $this->input->post('vid');
+		// 用户登陆了才能进行下一步操作
+		if (isset($this->session->user)) {
+			// 将看完的 video id 写入 数据库
+			$this->load->model('user_model');
+			$result = $this->user_model->add_watch_video(array('user_id'=>$this->session->user['id'],
+														'video_id' => $vid));
+			if ($result){
+				echo True;
+			} else {
+				echo FALSE;
+			}
 		}
 	}
 

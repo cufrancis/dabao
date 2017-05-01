@@ -62,14 +62,17 @@ $route['register'] = 'user/register';
 $route['login/logout'] = 'login/logout';
 
 // 课程详情
-$route['cursor/(\d+)'] = 'cursor/index/$1';
+$route['course/(\d+)'] = 'course/index/$1';
 // 课程修改
-$route['cursor/(\d+)/edit'] = 'cursor/edit/$1';
+$route['course/(\d+)/edit'] = 'course/edit/$1';
 // 课程更新
-$route['cursor/(\d+)/update'] = 'cursor/update/$1';
+$route['course/(\d+)/update'] = 'course/update/$1';
 
 // 上传视频
-$route['cursor/(\d+)/upload'] = 'cursor/upload/$1';
+$route['course/(\d+)/upload'] = 'course/upload/$1';
+
+// 添加评论
+$route['course/comment/add'] = 'course/comment_add';
 
 $route['reset_password'] = 'user/reset_password';
 

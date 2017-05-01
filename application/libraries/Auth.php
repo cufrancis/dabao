@@ -20,7 +20,7 @@ class Auth {
     public function is_login(){
         $this->CI->load->library("session");
 
-        if (isset($this->CI->session->user)){
+        if (isset($this->CI->session->user) || isset($this->CI->session->teacher)){
             return true;
         } else {
             return false;
@@ -34,9 +34,9 @@ class Auth {
     public function is_teacher(){
         $this->CI->load->library("session");
         $this->CI->load->database();
-        $this->CI->load->model('user_model');
+        // $this->CI->load->model('user_model');
 
-        if ($this->CI->session->user['type'] == 1){
+        if (isset($this->CI->session->teacher)){
             return true;
         } else {
             return false;
