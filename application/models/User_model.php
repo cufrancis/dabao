@@ -32,6 +32,15 @@ class User_model extends CI_Model{
     }
 
     /**
+     * 按照关注教师和年级，返回匹配的课程
+     * @param  [type] $user_id [description]
+     * @return [type]          [description]
+     */
+    public function get_class($user_id){
+        // $query = 
+    }
+
+    /**
      * 检测教师是不是当前用户所关注的，是返回True, 不是返回False
      * @param  [type] $ [description]
      * @return [type]   [description]

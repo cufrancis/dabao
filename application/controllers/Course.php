@@ -236,9 +236,35 @@ class Course extends CI_Controller {
         }
     }
 
-    public function before_class(){
+    public function before_class($teacher_id=False){
+        $this->load->library('Auth');
+        $this->auth->is_login();
+
+        $this->load->model('user_model');
+        $this->load->model('cursor_model');
+        $this->load->model('teacher_model');
+        $teachers = $this->user_model->get_teachers($this->session->user['id']);
+        // print_r($teachers);
+        // echo "<br />";
+
+        foreach ($teachers as $teacher) {
+            $teacher->teacher = $this->teacher_model->get_info($teacher->teacher_id);
+            // $teacher->courses = $this->teacher_model->get_courses($teacher->teacher_id);
+            // echo $teacher->teacher_id;
+        }
+        // print_r($teachers[1]);
+
+        // $videos = $this->cursor_model->get_course()
+
+        $data['teachers'] = $teachers;
+
+        if(!empty($teacher_id)){
+            $courses = $this->teacher_model->get_courses($teacher_id);
+            $data['courses'] = $courses;
+            // print_r($courses);
+        }
         $this->load->view('header');
-        $this->load->view('cursor/BeforeClass');
+        $this->load->view('cursor/BeforeClass', $data);
         $this->load->view('footer');
     }
 }

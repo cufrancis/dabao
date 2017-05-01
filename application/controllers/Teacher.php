@@ -71,7 +71,7 @@ class Teacher extends CI_Controller {
 		// 获取该教师发布的所有课程
 		$query = $this->db->select('*')
 							->from('cursor')
-							->where('teacher_id', $this->session->user['id'])
+							->where('teacher_id', $this->session->teacher['id'])
 							->get();
 
 		$data['courses'] = $query->result();

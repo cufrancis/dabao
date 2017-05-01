@@ -6,13 +6,10 @@
     <div class="col-md-2" style="border:1px solid #e7e7e7; margin-right:10px">
         <nav class="navbar" id="sidebar-wrapper" role="navigation">
             <ul class="nav sidebar-nav">
-                <li class="sidebar-brand"><a href="#">Bootstrap 3</a></li>
-                <li><a href="#"><i class="fa fa-fw fa-home"></i> Home</a></li>
-                <li><a href="#"><i class="fa fa-fw fa-folder"></i> Page one</a></li><li><a href="#"><i class="fa fa-fw fa-file-o"></i> Second page</a></li>
-                <li><a href="#"><i class="fa fa-fw fa-cog"></i> Third page</a></li>
-                <li><a href="#"><i class="fa fa-fw fa-bank"></i> Page four</a></li>
-                <li><a href="#"><i class="fa fa-fw fa-dropbox"></i> Page 5</a></li>
-                <li><a href="#"><i class="fa fa-fw fa-twitter"></i> Last page</a></li>
+                <?php foreach ($teachers as $teacher):?>
+                    <li><a href="<?=site_url('course/before_class/'.$teacher->teacher->id)?>"><?=$teacher->teacher->username;?></a></li>
+                <?php endforeach;?>
+
             </ul>
         </nav>
     </div>
@@ -25,9 +22,15 @@
             </ol>
         </div>
         <div class="col-md-12">
-            <div class="col-md-12">
+            <?php if(isset($courses) && is_array($courses)):?>
+                <?php foreach ($courses as $course): ?>
+                    <a href="#"><?=$course->name;?></a><br>
+                <?php endforeach; ?>
+            <?php else:?>
+                暂无数据
+            <?php endif;?>
+            <!-- <div class="col-md-12">
                 <div class="col-md-4">
-                    <!-- <img src="/resources/image/01.jpg" alt="" class="width:20%"> -->
                     <a href="<?=site_url('course/1'); ?>"><img src="<?=base_url('resources/image/05.png');?>" class="img-responsive center-block"></a>
                 </div>
                 <div class="col-md-4">
@@ -59,6 +62,6 @@
                     其他学科
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

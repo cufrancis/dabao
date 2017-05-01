@@ -46,7 +46,7 @@ class User extends CI_Controller {
 		}
 
 		// array_map($this->user_model->check_atten, $all_teachers);
-		print_r($all_teachers[0]->is_atten);
+		// print_r($all_teachers[0]->is_atten);
 		$data['all_teachers'] = $all_teachers;
 		// $this->load->
 		$data['user'] = $this->session->user;
