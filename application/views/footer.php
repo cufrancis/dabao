@@ -10,6 +10,8 @@
 <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.18.1/locale/zh-cn.js"></script>
 <script src="<?=base_url('resources/js/fine-uploader/jquery.fine-uploader.min.js')?>"></script>
+<script src="<?=base_url('resources/js/jquery.cxselect.js')?>"></script>
+
 
 <script type="text/javascript">
 // 时间设置

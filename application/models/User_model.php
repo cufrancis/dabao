@@ -31,6 +31,37 @@ class User_model extends CI_Model{
         }
     }
 
+    /**
+     * 检测教师是不是当前用户所关注的，是返回True, 不是返回False
+     * @param  [type] $ [description]
+     * @return [type]   [description]
+     */
+    public function check_atten($teacher, $type='*'){
+        $query = $this->db->select($type)->from('user_teacher')->where('user_id', (int)$this->session->user['id'])->where('teacher_id', (int)$teacher->id)->get();
+
+        // print_r($query->result());
+        if ($query) {
+            return True;
+        }else{
+            return False;
+        }
+    }
+
+    /**
+     * 获取用户所关注的所有教师
+     * @param  [type] $user_id [description]
+     * @return [type]          [description]
+     */
+    public function get_teachers($user_id, $type='*'){
+        $query = $this->db->select($type)->from('user_teacher')->where('user_id', (int)$user_id)->get();
+        if (!empty($query)){
+            return $query->result();
+        } else {
+            return False;
+        }
+        // print_r($query->result());
+    }
+
     public function is_teacher($id){
         // $query = $this->db->select()
     }

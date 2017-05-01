@@ -20,7 +20,42 @@ class User extends CI_Controller {
 	 */
 	public function index()
     {
+		$this->load->library('Auth');
+		$this->auth->is_login();
+
+		$this->load->model('user_model');
+		// print_r($this->session->user);
+
+		$query = $this->user_model->get_teachers($this->session->user['id']);
+		$teachers = array();
+		$this->load->model('teacher_model');
+		// $all_teachers = $this->teacher_model->get_all_teachers();
+
+		if (!empty($query)){
+			// 如果关注教师不为空
+			foreach ($query as $q) {
+				$teachers[] = $this->teacher_model->get_info($q->teacher_id);
+			}
+		}
+
+		$data['teachers'] = $teachers;
+		$all_teachers = $this->teacher_model->get_all_teachers();
+
+		foreach ($all_teachers as $teacher) {
+			$teacher->is_atten = $this->user_model->check_atten($teacher);
+		}
+
+		// array_map($this->user_model->check_atten, $all_teachers);
+		print_r($all_teachers[0]->is_atten);
+		$data['all_teachers'] = $all_teachers;
+		// $this->load->
+		$data['user'] = $this->session->user;
+		$this->load->view('header');
+		$this->load->view('user/index', $data);
+		$this->load->view('footer');
 	}
+
+
 
     public function login(){
 		// 加载表单验证类，并设置验证条件

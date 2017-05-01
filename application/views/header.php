@@ -72,6 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$this->session->user['username'];?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li><a href="<?=site_url('user/index')?>">我的主页</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="<?=site_url('reset_password');?>">修改密码</a></li>
                         <li><a href="<?=site_url('logout');?>">退出</a></li>
