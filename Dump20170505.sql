@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18, for Linux (x86_64)
 --
 -- Host: localhost    Database: xiaojieluo
 -- ------------------------------------------------------
--- Server version	5.0.83-community-nt
+-- Server version	5.5.5-10.1.22-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,10 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Not dumping tablespaces as no INFORMATION_SCHEMA.FILES table on this server
---
-
---
 -- Table structure for table `cursor`
 --
 
@@ -27,16 +23,19 @@ DROP TABLE IF EXISTS `cursor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cursor` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(45) default NULL,
-  `grade` int(11) default '0',
-  `created_at` int(11) default NULL,
-  `updated_at` int(11) default NULL,
-  `finished_at` int(11) default NULL,
-  `teacher_id` int(11) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `grade` int(11) DEFAULT '0',
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `finished_at` int(11) DEFAULT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
   `desc` text,
-  `class` int(11) default '0',
-  PRIMARY KEY  (`id`)
+  `class` int(11) DEFAULT '0',
+  `study` int(11) DEFAULT '0',
+  `img` varchar(45) DEFAULT NULL,
+  `star` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -46,7 +45,7 @@ CREATE TABLE `cursor` (
 
 LOCK TABLES `cursor` WRITE;
 /*!40000 ALTER TABLE `cursor` DISABLE KEYS */;
-INSERT INTO `cursor` VALUES (1,'计算机',1,NULL,NULL,NULL,2,'computer',1),(2,'数学',0,NULL,NULL,NULL,2,NULL,0),(3,'dfds',2,NULL,NULL,NULL,NULL,'',0),(4,'dfds',1,NULL,NULL,NULL,NULL,'',1),(5,'语文',2,NULL,NULL,NULL,NULL,'这是语文课',1);
+INSERT INTO `cursor` VALUES (1,'计算机',1,NULL,NULL,NULL,2,'This is Computer course',1,0,'img/computer.png',0),(2,'数学',0,NULL,NULL,NULL,2,NULL,0,0,'img/math.jpg',0),(5,'化学',2,0,0,0,0,'主要介绍化学的反应原理（包括动力学原理和热力学原理），内容与现今国内的大学一年级相关专业学生所用教材紧密对应，较为全面。',1,0,'img/Chemistry.jpg',0);
 /*!40000 ALTER TABLE `cursor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,12 +57,12 @@ DROP TABLE IF EXISTS `cursor_comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cursor_comments` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `cursor_id` int(11) default NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cursor_id` int(11) DEFAULT NULL,
   `text` text,
-  `author_id` int(11) default NULL,
-  `created_at` int(11) default NULL,
-  PRIMARY KEY  (`id`)
+  `author_id` int(11) DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='课程评论表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -73,7 +72,7 @@ CREATE TABLE `cursor_comments` (
 
 LOCK TABLES `cursor_comments` WRITE;
 /*!40000 ALTER TABLE `cursor_comments` DISABLE KEYS */;
-INSERT INTO `cursor_comments` VALUES (3,1,'dsa',4,1491539952),(2,1,'Test',4,1491536222);
+INSERT INTO `cursor_comments` VALUES (3,1,'这是第一条评论',4,1491539952),(2,1,'这是第二条评论',4,1491536222);
 /*!40000 ALTER TABLE `cursor_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,10 +84,10 @@ DROP TABLE IF EXISTS `question`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `question` (
-  `id` int(11) NOT NULL auto_increment,
-  `cursor_id` int(11) default NULL,
-  `url` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cursor_id` int(11) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -109,10 +108,10 @@ DROP TABLE IF EXISTS `teacher`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `teacher` (
-  `id` int(11) NOT NULL auto_increment,
-  `username` varchar(45) default NULL,
-  `password` varchar(45) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -134,14 +133,14 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL auto_increment,
-  `username` varchar(45) default NULL,
-  `password` varchar(45) default NULL,
-  `realname` varchar(45) default NULL,
-  `type` int(11) default NULL,
-  `grade` int(11) default NULL,
-  `class` int(11) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `realname` varchar(45) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `grade` int(11) DEFAULT NULL,
+  `class` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -163,10 +162,10 @@ DROP TABLE IF EXISTS `user_teacher`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_teacher` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `user_id` int(11) default NULL,
-  `teacher_id` int(11) default NULL,
-  PRIMARY KEY  (`id`),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -189,10 +188,10 @@ DROP TABLE IF EXISTS `user_watch_video`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_watch_video` (
-  `id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) default '0',
-  `video_id` int(11) default '0',
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT '0',
+  `video_id` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -214,14 +213,14 @@ DROP TABLE IF EXISTS `video`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `video` (
-  `id` int(11) NOT NULL auto_increment,
-  `cursor_id` int(11) default NULL,
-  `url` varchar(255) default NULL,
-  `name` varchar(255) default NULL,
-  `created_at` varchar(45) default NULL,
-  `updated_at` varchar(45) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cursor_id` int(11) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `created_at` varchar(45) DEFAULT NULL,
+  `updated_at` varchar(45) DEFAULT NULL,
   `desc` text,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -243,10 +242,10 @@ DROP TABLE IF EXISTS `watch`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `watch` (
-  `id` int(11) NOT NULL auto_increment,
-  `uid` int(11) default NULL,
-  `video_id` int(11) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL,
+  `video_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -268,4 +267,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-01 15:53:15
+-- Dump completed on 2017-05-05 16:50:12
