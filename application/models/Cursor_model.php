@@ -99,4 +99,20 @@ class Cursor_model extends CI_Model{
         $data = $query->result();
         return $data;
     }
+
+    /**
+     * 获取所有视频
+     * @return [type] [description]
+     */
+    public function get_all_courses(){
+        $this->load->database();
+
+        $query = $this->db->select('*')
+                            ->from('cursor')
+                            // ->where('cursor_id', (int)$id)
+                            ->get();
+
+        return $query->result();
+        // print_r($query->result());
+    }
 }

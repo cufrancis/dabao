@@ -15,11 +15,11 @@ class Course extends CI_Controller {
 
         $cursor = $this->cursor_model->getCursorInfo($id);
 
-        $data['cursor'] = $cursor;
+        $data['course'] = $cursor;
         // $data['cursor']->created_at = date("Y-m-d H:i:s", $cursor->created_at);
         // $data['cursor']->updated_at = date("Y-m-d H:i:s", $cursor->updated_at);
         // $data['cursor']->finished_at = date("Y-m-d H:i:s", $cursor->finished_at);
-        $data['cursor']->teacher = $this->teacher_model->getUserInfo($cursor->teacher_id);
+        $data['course']->teacher = $this->teacher_model->get_info($cursor->teacher_id);
         $data['videos'] = $this->cursor_model->get_video_of_cursor($id);
         // print_r($data['videos']);
         $this->load->model('user_model');
@@ -31,20 +31,32 @@ class Course extends CI_Controller {
             }
         }
         // print_r($data['videos']);
-        $data['cursor']->comments = $this->cursor_model->get_all_comments($id);
+        $data['course']->comments = $this->cursor_model->get_all_comments($id);
 
-        foreach ($data['cursor']->comments as $key => $value) {
+        foreach ($data['course']->comments as $key => $value) {
             // 这么一大串是为了提取每条评论中的 author_id
             // 并将 author_id 传入 user_model 模块的 getUserInfo() 函数来获取用户的相信信息
             // 最后再在 $data 数组中新建 author 键，并存入查询的用户数据
             // 这样操作之后，在模板中就可以通过 $data['cursor']->comments[0]->author->username
             // 直接获取到评论作者的信息了
-            $data['cursor']->comments[$key]->author = $this->user_model->getUserInfo($value->author_id);
+            $data['course']->comments[$key]->author = $this->user_model->getUserInfo($value->author_id);
         }
-        // print_r($data['videos']);
+        // print_r($data['course']);
 
         $this->load->view('header');
-        $this->load->view('cursor/index', $data);
+        // $this->load->view('cursor/index', $data);
+        $this->load->view('course/index', $data);
+        $this->load->view('footer');
+    }
+
+    public function all(){
+        // courses
+        $this->load->model('cursor_model');
+        $courses = $this->cursor_model->get_all_courses();
+
+        $data['courses'] = $courses;
+        $this->load->view('header');
+        $this->load->view('course/all', $data);
         $this->load->view('footer');
     }
 

@@ -80,6 +80,8 @@ $route['reset_password'] = 'user/reset_password';
 
 $route['course/before_class/(\d+)'] = 'course/before_class/$1';
 
+$route['courses'] = 'course/all';
+
 // 教师端
 // $route['teacher/login'] = 'teacher/login';
 // $route['teacher/logout'] = 'teacher/logout';
