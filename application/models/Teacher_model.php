@@ -53,7 +53,7 @@ class Teacher_model extends CI_Model{
         // $query = $this->db->query($sql, array((int)$id));
 
         $query = $this->db->select($type)->from('teacher')->where('id', (int)$id)->get();
-        // print_r($query->result());
+        print_r($query->result());
         if (!empty($query)) {
             return $query->result()[0];
         }else{

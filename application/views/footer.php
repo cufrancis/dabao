@@ -1,22 +1,5 @@
 
 
-	<div class="modal fade" id="invite-user" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">邀请好友，双方都可获赠实验豆！</h4>
-				</div>
-				<div class="modal-body">
-
-                        <p><h4><a href="#sign-modal" data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！</h4></p>
-
-					<div id="msg-modal"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="modal fade" id="flash-message" tabindex="-1" role="dialog">
 		<div class="modal-dialog" rolw="document">
 		</div>
@@ -214,6 +197,102 @@
             release: '3.12.13'
         }).install();
     </script>
+	<script src="<?=base_url('resources/bower_components/videojs-playlist/dist/videojs-playlist.js')?>" charset="utf-8"></script>
+
+	<script type="text/javascript">
+	var player = videojs('video', { }, function(){
+       console.log("good to go!");
+    });
+    player.on('ended', function(){
+        console.log('结束播放');
+		var video_id = $(this).attr('video-id');
+		console.log("video_id="+video_id);
+		$.ajax({
+			type: "POST",
+			url: "<?=site_url('user/ajax_view_video')?>",
+			dataType:"json",
+			data:{video_id:video_id},
+			success:function(result){
+				// alert(result);
+				check_watch_end();
+			},
+			error:function(jqXHR, textStatus, errorThrown){
+				/*弹出jqXHR对象的信息*/
+				alert(jqXHR.responseText);
+				alert(jqXHR.status);
+				alert(jqXHR.readyState);
+				alert(jqXHR.statusText);
+				/*弹出其他两个参数的信息*/
+				alert(textStatus);
+				alert(errorThrown);
+			}
+		});
+    });
+
+	function check_watch_end(){
+		var courseid = <?=$course->id?>;
+		$.ajax({
+			type:"POST",
+			url:"<?=site_url('course/ajax_check_watch_video')?>",
+			dataType:"json",
+			data:{cursor_id:courseid},
+			success:function(result){
+				// alert(result);
+				if (result== 0)$(".exam").removeClass("banner-image");
+			},
+			error:function(jqXHR, textStatus, errorThrown){
+				/*弹出jqXHR对象的信息*/
+				alert(jqXHR.responseText);
+				// alert(jqXHR.status);
+				// alert(jqXHR.readyState);
+				// alert(jqXHR.statusText);
+				// /*弹出其他两个参数的信息*/
+				// alert(textStatus);
+				// alert(errorThrown);
+			}
+		});
+	}
+
+    /**
+     * 单击播放列表事件
+     * @var string
+     */
+    $('.video_click').click(function(){
+        // 单击播放列表事件
+        // console.log($('.video_click').attr('data-id'));
+		var video_id = $(this).attr('data-id');
+		console.log("video_id="+video_id);
+		$.ajax({
+			type: "POST",
+			url: "<?=site_url('course/get_video')?>",
+			dataType:"json",
+			data:{video_id:video_id},
+			success:function(result){
+				// alert(result);
+				console.log(result);
+				var url = "<?php echo base_url('uploads');?>";
+				url = url+'/'+result['url']
+				console.log(url);
+				player.src(url);
+				player.setAttribute('video-id', result['id'])
+			},
+			error:function(jqXHR, textStatus, errorThrown){
+				/*弹出jqXHR对象的信息*/
+				alert(jqXHR.responseText);
+				alert(jqXHR.status);
+				alert(jqXHR.readyState);
+				alert(jqXHR.statusText);
+				/*弹出其他两个参数的信息*/
+				alert(textStatus);
+				alert(errorThrown);
+			}
+		});        // var url = "<?=base_url();?>"+$(this).attr('src')
+        // var video = $('#video');
+        // video.attr('src', url);
+        // $("video source").attr("id", $(this).attr("id"));
+        // alert(video.attr('src'));
+	});
+	</script>
 
 
 

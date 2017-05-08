@@ -282,7 +282,9 @@ class User extends CI_Controller {
 	}
 
 	public function ajax_view_video(){
-		$vid = $this->input->post('vid');
+		$vid = $this->input->post('video_id');
+		echo $vid;
+		// print_r($vid);
 		// 用户登陆了才能进行下一步操作
 		if (isset($this->session->user)) {
 			// 将看完的 video id 写入 数据库
@@ -290,9 +292,9 @@ class User extends CI_Controller {
 			$result = $this->user_model->add_watch_video(array('user_id'=>$this->session->user['id'],
 														'video_id' => $vid));
 			if ($result){
-				echo True;
+				echo json_encode(TRUE);
 			} else {
-				echo FALSE;
+				echo json_encode(FALSE);
 			}
 		}
 	}

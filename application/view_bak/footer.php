@@ -11,7 +11,8 @@
 <script src="https://cdn.bootcss.com/moment.js/2.18.1/locale/zh-cn.js"></script>
 <script src="<?=base_url('resources/js/fine-uploader/jquery.fine-uploader.min.js')?>"></script>
 <script src="<?=base_url('resources/js/jquery.cxselect.js')?>"></script>
-
+<!-- If you'd like to support IE8 -->
+<script src="https://cdn.bootcss.com/video.js/6.0.1/ie8/videojs-ie8.js"></script>
 
 <script type="text/javascript">
 // 时间设置

@@ -68,6 +68,14 @@
                 <div class="pull-right course-infobox-price">
 
                 </div>
+                <video id="video" preload class="video-js" controls preload="auto" width="640" height="264" poster="MY_VIDEO_POSTER.jpg" data-setup="{}" video-id="<?=$videos[0]->id;?>">
+                    <source src="<?=base_url('uploads/'.$videos[0]->url)?>" type='video/mp4'>
+                    <source src="MY_VIDEO.webm" type='video/webm'>
+                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                    </p>
+              </video>
+
+
 
         </div>
 
@@ -82,6 +90,9 @@
 
             <li role="presentation" class="active">
                 <a href="#labs" aria-controls="labs" role="tab" data-toggle="tab">视频列表</a>
+            </li>
+            <li role="presentation">
+                <a href="#exam" class="stat-event" data-stat="course_report" aria-controls="reports" role="tab" data-toggle="tab">实验报告(4430)</a>
             </li>
 
 		</ul>
@@ -102,15 +113,26 @@
         <div class="lab-item-title" title="<?=$video->name?>"><?=$video->name?></div>
         <div class="pull-right lab-item-ctrl">
                              <!--<a class="btn btn-default" href="/courses/63/labs/291/document" target="_blank">查看文档</a>-->
-            <a class="btn btn-primary   lab-item-start"
-                data-mobile-url="/courses/document/291"
-                href="#" data-url="/courses/start/291"
-                data-labid="291"
-                data-next="/courses/running">开始观看</a>
+            <a class="video_click btn btn-primary   lab-item-start" data-id="<?=$video->id?>">开始观看</a>
         </div>
     </div>
 <?php endforeach; ?>
+            </div>
 
+            <div role="tabpanel" class="tab-pane" id="exam">
+                <?php $x = 1;?>
+                <?php foreach ($videos as $video): ?>
+                    <?php $x = $x*$video->isWatch;?>
+                <?php endforeach; ?>
+                <?php if ($x == 0): ?>
+                    <div class="vip-banner course-vip-banner ">
+                        <img src="https://static.shiyanlou.com/img/icon-vip.png">
+                        看完视频才显示试题
+                        <a class="btn" href="/vip" target="_blank">立即加入</a>
+                    </div>
+                <?php else:?>
+                    现实试题
+                <?php endif; ?>
 
             </div>
 		</div>
@@ -192,25 +214,12 @@
         </div>
     </div>
 
-
-    <div class="vip-banner course-vip-banner">
-        <img src="https://static.shiyanlou.com/img/icon-vip.png">
-        实验楼会员 ＝ 精品课程 + 环境保存 + 实验联网 + 会员客户端
-        <a class="btn" href="/vip" target="_blank">立即加入</a>
-    </div>
-
-
-
             </div>
             <div class="col-md-3 layout-side">
 
     <div class="side-image side-image-pc">
-        <img src="https://dn-simplecloud.shiyanlou.com/ncn63.jpg?imageView2/0/h/300">
+        <img src="<?=base_url('resources/'.$course->img."?imageView2/0/h/300")?>">
     </div>
-
-
-
-
 
 <div class="sidebox mooc-teacher">
     <div class="sidebox-header mooc-header">
@@ -221,9 +230,9 @@
             <img src="https://dn-anything-about-doc.qbox.me/teacher/PHP.png">
         </a>
         <div class="mooc-info">
-            <div class="name"><strong>情人草</strong> </div>
+            <div class="name"><strong><?=$course->teacher->username;?></strong> </div>
 
-            <div class="courses">共发布过<strong>1</strong>门课程</div>
+            <div class="courses">共发布过<strong><?=count($course->teacher->courses)?></strong>门课程</div>
         </div>
         <div class="mooc-extra-info">
             <div class="word long-paragraph">
@@ -232,24 +241,19 @@
         </div>
     </div>
     <div class="sidebox-footer mooc-footer">
-        <a href="/teacher/20440" target="_blank">查看老师的所有课程 ></a>
+        <a href="<?=site_url('teacher/'.$course->teacher->id)?>" target="_blank">查看老师的所有课程 ></a>
     </div>
 </div>
 
 
 
 
-    <div class="side-image">
-    <a href="/vip" target="_blank">
-        <img src="https://static.shiyanlou.com/img/banner-vip.png">
-    </a>
-</div>
 
 
 
 
 
-    <div class="sidebox adv-course">
+    <!--<div class="sidebox adv-course">
         <div class="sidebox-header">
             <h4 class="sidebox-title">进阶课程</h4>
         </div>
@@ -262,7 +266,7 @@
             <a href="/courses/57">C语言入门教程</a>
 
         </div>
-    </div>
+    </div>-->
 
 
 
@@ -582,3 +586,12 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.bootcss.com/video.js/6.0.1/video.js"></script>
+<script type="text/javascript">
+
+
+    // check_watch_end();
+
+
+</script>

@@ -30,7 +30,7 @@ class Welcome extends CI_Controller {
 		$this->output->enable_profiler(TRUE);
 		$this->load->model('cursor_model');
 		$data['courses'] = $this->cursor_model->get_courses(6);
-		// print_r($this->cursor_model->get_courses(6));
+		// print_r($data['course']);
 
 		// $this->session->name = 'llnhhy';
 		$this->load->view('header');

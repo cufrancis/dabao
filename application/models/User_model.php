@@ -37,7 +37,7 @@ class User_model extends CI_Model{
      * @return [type]          [description]
      */
     public function get_class($user_id){
-        // $query = 
+        // $query =
     }
 
     /**
@@ -113,9 +113,20 @@ class User_model extends CI_Model{
 
         if ($query->result()){
             // 如果查到结果，说明已经看完，返回True
-            return True;
+            return 1;
         } else {
-            return False;
+            return 0;
+        }
+    }
+
+    /**
+     * 检查 指定用户有没有看完课程的全部视频
+     * @param  [type] $course_id [description]
+     * @return [type]            [description]
+     */
+    public function check_watch($course_id, $user_id){
+        if (isset($course_id) && isset($user_id)){
+
         }
     }
 

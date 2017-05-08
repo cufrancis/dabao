@@ -20,14 +20,16 @@ class Course extends CI_Controller {
         // $data['cursor']->updated_at = date("Y-m-d H:i:s", $cursor->updated_at);
         // $data['cursor']->finished_at = date("Y-m-d H:i:s", $cursor->finished_at);
         $data['course']->teacher = $this->teacher_model->get_info($cursor->teacher_id);
+        $data['course']->teacher->courses = $this->teacher_model->get_courses($cursor->teacher_id);
         $data['videos'] = $this->cursor_model->get_video_of_cursor($id);
         // print_r($data['videos']);
         $this->load->model('user_model');
         foreach($data['videos'] as $video){
             if ($this->user_model->is_watch_video($this->session->user['id'], $video->id)){
-                $video->isWatch = True;
+
+                $video->isWatch = 1;
             } else {
-                $video->isWatch = False;
+                $video->isWatch = 0;
             }
         }
         // print_r($data['videos']);
@@ -41,7 +43,7 @@ class Course extends CI_Controller {
             // 直接获取到评论作者的信息了
             $data['course']->comments[$key]->author = $this->user_model->getUserInfo($value->author_id);
         }
-        // print_r($data['course']);
+        print_r($data['videos']);
 
         $this->load->view('header');
         // $this->load->view('cursor/index', $data);
@@ -278,5 +280,17 @@ class Course extends CI_Controller {
         $this->load->view('header');
         $this->load->view('cursor/BeforeClass', $data);
         $this->load->view('footer');
+    }
+
+    /**
+     * 获取video 信息
+     * @return [type] [description]
+     */
+    public function get_video(){
+        // $cursor_id = $this->input->post("cursor_id");
+        $video_id = (int)$this->input->post('video_id');
+        $this->load->model('video_model');
+        $video = $this->video_model->get_course($video_id);
+        echo json_encode($video);
     }
 }

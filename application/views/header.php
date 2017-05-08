@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="https://static.shiyanlou.com/static/katex/0.7.1/katex.min.css">
     <link rel="stylesheet" href="https://static.shiyanlou.com/static/videojs/5.15.1/css/video-js.min.css">
     <link rel="stylesheet" href="https://static.shiyanlou.com/static/highlight.js/9.9.0/css/monokai-sublime.min.css">
+	<link href="https://cdn.bootcss.com/video.js/6.0.1/video-js.css" rel="stylesheet">
 
     <link rel="stylesheet" href="<?=base_url('resources/app/dist/css/styles.css')?>">
 
@@ -69,6 +70,29 @@
             text-align: center;
             font-size: 14px;
         }
+		.banner-image{
+		  position: absolute;
+		  top:0;
+		  background-size: cover;
+		  z-index: 1 ;
+		  width: 100%;
+		  /*height: 300px;*/
+		  background:url(<?=base_url('resources/img/white.png')?>) center;
+		  /*background-color: #cccccb;*/
+		}
+		.banner{
+		    position: relative;;
+		    overflow: hidden;
+		    width: 100%;
+		    height: 300px;
+		    z-index: 2;
+		    top: 0;
+		    background: #cccccc;
+		}
+		.vip-banner {
+			position: absolute;
+		}
+
     </style>
 
 
@@ -96,6 +120,7 @@
             </button>
             <a class="navbar-brand" href="/">
                 <!--<img src="https://static.shiyanlou.com/img/logo_02.png">-->
+				<h3>Dabao</h3>
             </a>
         </div>
 
@@ -107,13 +132,10 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="active"><a href="/courses/">全部课程</a></li>
-                        <li class=""><a href="/paths/">学习路径</a></li>
-                        <li class=" bootcamp"><a href="/bootcamp/">训练营</a></li>
+                        <!--<li class=""><a href="/paths/">学习路径</a></li>
+                        <li class=" bootcamp"><a href="/bootcamp/">训练营</a></li>-->
                     </ul>
                 </li>
-
-
-
 
                       <li class=""><a href="/user/410849/">我的课程</a></li>
 
@@ -121,7 +143,7 @@
 
             </ul>
 
-            <?php if (isset($session->user)): ?>
+			<?php if (isset($this->session->user)):?>
                 <ul class="nav navbar-nav navbar-right header-user">
 
                     <li id="header-message"
@@ -132,14 +154,14 @@
 
 
                     <li id="header-userbox"
-                        data-username="LOU1377008009"
+                        data-username="<?=$this->session->user['username']?>"
                         data-level="1"
-                        data-home="/user/410849/"
+                        data-home="<?=site_url('user/'.$this->session->user['id'])?>"
                         data-avatar="https://dn-simplecloud.shiyanlou.com/gravatar7BJ5SVLA29M8.jpg?imageView2/1/w/200/h/200"
                         data-is-member="false"
                         data-is-senior-member="false"
                         data-vip-index="/vip"
-                        data-setting="/user/profile"
+                        data-setting="<?=site_url('user/profile')?>"
                         data-logout="<?=site_url('logout')?>"
                         data-member-icon="https://static.shiyanlou.com/img/icon-vip.png"
                     >
@@ -147,8 +169,10 @@
                 </ul>
             <?php else: ?>
                 <ul class="nav navbar-nav navbar-right header-sign">
-                                <li><a class="sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a></li>
-                                <li><a class="sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a></li>
+                                <!--<li><a class="sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a></li>
+                                <li><a class="sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a></li>-->
+								<li><a class="sign-in" data-sign="signin" href="<?=site_url('/login')?>" data-toggle="modal">登录</a></li>
+                                <li><a class="sign-up" data-sign="signup" href="<?=site_url('register')?>" data-toggle="modal">注册</a></li>
                             </ul>
             <?php endif; ?>
 
