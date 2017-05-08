@@ -115,4 +115,18 @@ class Cursor_model extends CI_Model{
         return $query->result();
         // print_r($query->result());
     }
+
+    public function get_courses($num = 0){
+        if ($num == 0){
+            return $this->get_all_courses();
+        } else {
+            $query = $this->db->select('*')
+                                ->from('cursor')
+                                // ->where('cursor_id', (int)$id)
+                                ->limit((int)$num)
+                                ->get();
+
+            return $query->result();
+        }
+    }
 }

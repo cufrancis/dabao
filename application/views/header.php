@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -12,13 +10,7 @@
   <meta name="csrf-token" content="1494055056##1970034031ec91533ccfe7d77d53ba456719526a">
 
 
-        <title>全部 - 课程 - 实验楼</title>
-
-
-
-
-<meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
-<meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
+        <title>全部 - 课程</title>
 
     <meta content="suyuting" name="author">
 
@@ -103,7 +95,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">
-                <img src="https://static.shiyanlou.com/img/logo_02.png">
+                <!--<img src="https://static.shiyanlou.com/img/logo_02.png">-->
             </a>
         </div>
 
