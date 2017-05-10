@@ -1,71 +1,60 @@
-<link rel="stylesheet" href="<?=base_url('resources/js/chosen/chosen.css')?>">
+<div class="container layout-margin-top layout-noside">
 
 
-<div class="row">
-    <div class="col-md-5">
-        <div class="panel panel-default">
-            <div class="panel panel-heading">
-                <p>个人信息</p>
-                我的年级: <?=$this->session->user['grade'];?><br />
-                我的班级：<?=$this->session->user['class'];?><br>
-                我关注的教师:
-                <select data-placeholder="Choose a country..." style="width:350px;" multiple class="chosen-select">
-                    <?php foreach ($all_teachers as $teacher): ?>
-                        <option value="<?=$teacher->id;?>" <?php if($teacher->is_atten):?>selected<?php endif;?>><?=$teacher->username?></option>
-                    <?php endforeach; ?>
-                </select>
+    <div class="row">
+        <div class="col-md-12 layout-body">
+
+<div class="userinfo-banner container">
+    <div class="banner-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-left userinf
+                o-banner-avatar">
+
+
+
+
+    <div class="user-avatar ">
+        <a class="avatar" href="/user/410849/" target="_blank">
+            <img src="https://dn-simplecloud.shiyanlou.com/gravatar7BJ5SVLA29M8.jpg?imageView2/1/w/200/h/200">
+        </a>
+
+    </div>
+
+
+                    <div class="userinfo-banner-money">
+                    </div>
+
+                </div>
+                <div class="pull-left userinfo-banner-details">
+                    <div class="userinfo-banner-meta">
+                        <span><?=$this->session->user['username']?></span>
+						<div class="vip-info">
+                            <i class="i-user-vip-buy"></i>
+						</div>
+                    </div>
+                    <div class="userinfo-banner-status">
+
+                    </div>
+					<div class="show-level">
+					<!--	<span class="level-num"><I>1 楼</I><img src="https://static.shiyanlou.com/img/user-floor-icon.png"></span>
+
+						<span class="level-up-info">距  2 楼还需 30 分钟有效学习时间</span>-->
+                        上次登陆时间:<?=date('Y-m-d H:i:s', $this->session->user['now_login_at'])?>
+                        已登陆:<?php echo floor((time() - $this->session->user['now_login_at'])/60)?> 分钟
+					</div>
+                </div>
+                看过的视频:<br />
             </div>
         </div>
     </div>
 </div>
-<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
-<script src="<?=base_url('resources/js/jquery.cxselect.js')?>"></script>
-<script src="<?=base_url('resources/js/chosen/chosen.jquery.js')?>"></script>
-<script src="<?=base_url('resources/js/chosen/chosen.proto.js')?>"></script>
-<script type="text/javascript">
-$(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
-$('#element_id').cxSelect({
-  selects: ['grade', 'class'],
-  required: true,
-  jsonValue: 'v',
-  data: [
-    {'v': '01', 'n': '一年级 >', 's': [
-        {'v':'01', 'n':'(1)班'},
-        {'v':'02', 'n':'(2)班'},
-        {'v':'03', 'n':'(3)班'},
-        {'v':'04', 'n':'(4)班'},
-    ]},
-    {'v': '02', 'n': '二年级 >', 's': [
-        {'v':'01', 'n':'(1)班'},
-        {'v':'02', 'n':'(2)班'},
-        {'v':'03', 'n':'(3)班'},
-        {'v':'04', 'n':'(4)班'},
-    ]},
-    {'v': '03', 'n': '三年级 >', 's': [
-        {'v':'01', 'n':'(1)班'},
-        {'v':'02', 'n':'(2)班'},
-        {'v':'03', 'n':'(3)班'},
-        {'v':'04', 'n':'(4)班'},
-    ]},
-    {'v': '04', 'n': '四年级 >', 's': [
-        {'v':'01', 'n':'(1)班'},
-        {'v':'02', 'n':'(2)班'},
-        {'v':'03', 'n':'(3)班'},
-        {'v':'04', 'n':'(4)班'},
-    ]},
-    {'v': '05', 'n': '五年级 >', 's': [
-        {'v':'01', 'n':'(1)班'},
-        {'v':'02', 'n':'(2)班'},
-        {'v':'03', 'n':'(3)班'},
-        {'v':'04', 'n':'(4)班'},
-    ]},
-    {'v': '06', 'n': '六年级 >', 's': [
-        {'v':'01', 'n':'(1)班'},
-        {'v':'02', 'n':'(2)班'},
-        {'v':'03', 'n':'(3)班'},
-        {'v':'04', 'n':'(4)班'},
-    ]},
-]
-});
+<div class="container layout">
+    <div class="row">
+        <div class="col-md-9 layout-body">
 
-</script>
+
+
+        </div>
+    </div>
+</div>

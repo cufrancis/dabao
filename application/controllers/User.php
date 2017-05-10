@@ -18,14 +18,13 @@ class User extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
+	public function index($uid)
     {
 		$this->load->library('Auth');
 		$this->auth->is_login();
 
 		$this->load->model('user_model');
 		// print_r($this->session->user);
-
 		$query = $this->user_model->get_teachers($this->session->user['id']);
 		$teachers = array();
 		$this->load->model('teacher_model');
@@ -48,8 +47,15 @@ class User extends CI_Controller {
 		// array_map($this->user_model->check_atten, $all_teachers);
 		// print_r($all_teachers[0]->is_atten);
 		$data['all_teachers'] = $all_teachers;
-		// $this->load->
+		// print_r($this->session->user);
 		$data['user'] = $this->session->user;
+
+		$data['videos'] = $this->user_model->get_watch_video($this->session->user['id']);
+		$this->load->model('video_model');
+		foreach ($data['videos'] as $video) {
+			$video->video = $this->video_model->get_info($video->video_id);
+		}
+		print_r($data['videos']);
 		$this->load->view('header');
 		$this->load->view('user/index', $data);
 		$this->load->view('footer');
@@ -90,6 +96,9 @@ class User extends CI_Controller {
 								->get();
 
 			$info = $query->row_array();
+			$this->load->model('user_model');
+			// print_r($info);
+			$this->user_model->update_now_login_time($info['id']);
 
 			// 将用户信息存入session
 			$this->session->user = $info;

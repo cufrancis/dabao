@@ -92,7 +92,7 @@
                 <a href="#labs" aria-controls="labs" role="tab" data-toggle="tab">视频列表</a>
             </li>
             <li role="presentation">
-                <a href="#exam" class="stat-event" data-stat="course_report" aria-controls="reports" role="tab" data-toggle="tab">实验报告(4430)</a>
+                <a href="#exam" class="stat-event" data-stat="course_report" aria-controls="reports" role="tab" data-toggle="tab">课前预习</a>
             </li>
 
 		</ul>
@@ -128,10 +128,17 @@
                     <div class="vip-banner course-vip-banner ">
                         <img src="https://static.shiyanlou.com/img/icon-vip.png">
                         看完视频才显示试题
-                        <a class="btn" href="/vip" target="_blank">立即加入</a>
                     </div>
                 <?php else:?>
-                    现实试题
+                    <?php $i = 1;?>
+                    <?php foreach ($exams as $exam): ?>
+                        <p><?=$i++?>.<?=$exam->title?></p>
+                        <?php foreach ($exam->select as $key => $value): ?>
+
+<div class="lab-item-title"><input type="radio" name="sex" value="male"><?=$key?>.<?=$value?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 <?php endif; ?>
 
             </div>
@@ -142,12 +149,12 @@
             <li role="presentation" class="active">
                 <a href="#comments" class="stat-event" aria-controls="comments" role="tab" data-stat="course_comment" data-toggle="tab">课程评论(<?=count($course->comments)?>)</a>
             </li>
-            <li role="presentation">
+            <!--<li role="presentation">
                 <a href="#reports" class="stat-event" data-stat="course_report" aria-controls="reports" role="tab" data-toggle="tab">实验报告(4430)</a>
             </li>
             <li role="presentation">
                 <a href="#questions" class="stat-event" data-stat="course_question" aria-controls="questions" role="tab" data-toggle="tab">实验问答(295)</a>
-            </li>
+            </li>-->
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane course-comment active" id="comments">

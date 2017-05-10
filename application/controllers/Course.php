@@ -43,7 +43,13 @@ class Course extends CI_Controller {
             // 直接获取到评论作者的信息了
             $data['course']->comments[$key]->author = $this->user_model->getUserInfo($value->author_id);
         }
-        print_r($data['videos']);
+        // print_r($data['videos']);
+        $this->load->model('exam_model');
+        $data['exams'] = $this->exam_model->get_exam($id);
+        foreach ($data['exams'] as $exam) {
+            $exam->select = json_decode($exam->select);
+        }
+        print_r($data['exams']);
 
         $this->load->view('header');
         // $this->load->view('cursor/index', $data);

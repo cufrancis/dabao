@@ -82,6 +82,10 @@ $route['course/before_class/(\d+)'] = 'course/before_class/$1';
 
 $route['courses'] = 'course/all';
 
+$route['exam/(\d+)'] = 'exam/index/$1';
+
+$route['user/(\d+)'] = 'user/index/$1';
+
 // 教师端
 // $route['teacher/login'] = 'teacher/login';
 // $route['teacher/logout'] = 'teacher/logout';

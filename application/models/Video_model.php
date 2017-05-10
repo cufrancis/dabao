@@ -23,4 +23,9 @@ class Video_model extends CI_Model{
         return $video;
     }
 
+    public function get_info($id){
+        $query = $this->db->select("*")->from('video')->where('id', (int)$id)->get();
+        $video = $query->result()[0];
+    }
+
 }

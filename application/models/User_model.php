@@ -32,6 +32,28 @@ class User_model extends CI_Model{
     }
 
     /**
+     * 更新本次登陆时间
+     * @var [type]
+     */
+    public function update_now_login_time($id){
+        $this->db->set('now_login_at', time());
+
+        $this->db->where('id', (int)$id);
+        $this->db->update('user');
+        // print_r($result);
+    }
+
+    /**
+     * 获取用户看过的所有视频
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function get_videos($id){
+        $result = $this->db->select("*")->from('user_watch_video')->where('user_id', (int)$id)->get();
+        return $result->result();
+    }
+
+    /**
      * 按照关注教师和年级，返回匹配的课程
      * @param  [type] $user_id [description]
      * @return [type]          [description]

@@ -198,6 +198,56 @@
         }).install();
     </script>
 	<script src="<?=base_url('resources/bower_components/videojs-playlist/dist/videojs-playlist.js')?>" charset="utf-8"></script>
+	<script src="<?=base_url('resources/js/jquery.cxselect.js')?>"></script>
+	<script src="<?=base_url('resources/js/chosen/chosen.jquery.js')?>"></script>
+	<script src="<?=base_url('resources/js/chosen/chosen.proto.js')?>"></script>
+	<script type="text/javascript">
+	$(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
+	$('#element_id').cxSelect({
+	  selects: ['grade', 'class'],
+	  required: true,
+	  jsonValue: 'v',
+	  data: [
+	    {'v': '01', 'n': '一年级 >', 's': [
+	        {'v':'01', 'n':'(1)班'},
+	        {'v':'02', 'n':'(2)班'},
+	        {'v':'03', 'n':'(3)班'},
+	        {'v':'04', 'n':'(4)班'},
+	    ]},
+	    {'v': '02', 'n': '二年级 >', 's': [
+	        {'v':'01', 'n':'(1)班'},
+	        {'v':'02', 'n':'(2)班'},
+	        {'v':'03', 'n':'(3)班'},
+	        {'v':'04', 'n':'(4)班'},
+	    ]},
+	    {'v': '03', 'n': '三年级 >', 's': [
+	        {'v':'01', 'n':'(1)班'},
+	        {'v':'02', 'n':'(2)班'},
+	        {'v':'03', 'n':'(3)班'},
+	        {'v':'04', 'n':'(4)班'},
+	    ]},
+	    {'v': '04', 'n': '四年级 >', 's': [
+	        {'v':'01', 'n':'(1)班'},
+	        {'v':'02', 'n':'(2)班'},
+	        {'v':'03', 'n':'(3)班'},
+	        {'v':'04', 'n':'(4)班'},
+	    ]},
+	    {'v': '05', 'n': '五年级 >', 's': [
+	        {'v':'01', 'n':'(1)班'},
+	        {'v':'02', 'n':'(2)班'},
+	        {'v':'03', 'n':'(3)班'},
+	        {'v':'04', 'n':'(4)班'},
+	    ]},
+	    {'v': '06', 'n': '六年级 >', 's': [
+	        {'v':'01', 'n':'(1)班'},
+	        {'v':'02', 'n':'(2)班'},
+	        {'v':'03', 'n':'(3)班'},
+	        {'v':'04', 'n':'(4)班'},
+	    ]},
+	]
+	});
+
+	</script>
 
 	<script type="text/javascript">
 	var player = videojs('video', { }, function(){
