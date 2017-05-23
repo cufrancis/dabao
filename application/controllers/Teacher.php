@@ -52,7 +52,7 @@ class Teacher extends CI_Controller {
 			// 设置登录成功提示，并标记为flashdata数据（只显示一次的session数据，具体看ci的session类库）
 			// $this->session->message = '登录成功！';
 			// $this->session->mark_as_flash('msessage');
-			redirect(site_url());
+			redirect(site_url('/teacher/course'));
 		}
     }
 
@@ -60,7 +60,7 @@ class Teacher extends CI_Controller {
 		$this->load->library('Auth');
 
 		$this->auth->check_login();
-		$this->auth->is_teacher();
+		// $this->auth->is_teacher();
 
 		# 教师所创建的课程列表
 		$this->load->database();
@@ -78,9 +78,9 @@ class Teacher extends CI_Controller {
 		// foreach ($query->result() as $row){
 		// 	echo $row->name;
 		// }
-		$this->load->view('header');
+		// $this->load->view('header');
 		$this->load->view('teacher/course', $data);
-		$this->load->view('footer');
+		// $this->load->view('footer');
 	}
 	/**
 	 * 退出登录

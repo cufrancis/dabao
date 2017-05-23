@@ -280,7 +280,7 @@
     });
 
 	function check_watch_end(){
-		var courseid = <?=$course->id?>;
+		var courseid = <?php if(isset($course)){echo $course->id;}else{echo 0;}?>;
 		$.ajax({
 			type:"POST",
 			url:"<?=site_url('course/ajax_check_watch_video')?>",
@@ -429,6 +429,54 @@
         </script>
     </div>
 </div>
+<script src="<?=base_url('resources/js/fine-uploader/jquery.fine-uploader.min.js')?>"></script>
+<script src="<?=base_url('resources/js/jquery.cxselect.js')?>"></script>
+<!-- If you'd like to support IE8 -->
+<script src="https://cdn.bootcss.com/video.js/6.0.1/ie8/videojs-ie8.js"></script>
+
+<script type="text/javascript">
+// 时间设置
+    $(".time p").html(moment().format("LLLL"))
+    // var date = new Date(1398250549490);
+    // Y = date.getFullYear() + '-';
+    // M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    // D = date.getDate() + ' ';
+    // h = date.getHours() + ':';
+    // m = date.getMinutes() + ':';
+    // s = date.getSeconds();
+</script>
+
+<script>
+    $('#fine-uploader-gallery').fineUploader({
+        debug: true,
+        template: 'qq-template-gallery',
+        request: {
+            endpoint: '<?=site_url('course/'.$cursor->id.'/upload')?>'
+        },
+        retry:{
+            enableAuto: true,
+        },
+        deleteFile: {
+            enabled: true, // defaults to false
+            endpoint: '/my/delete/endpoint',
+        },
+        thumbnails: {
+            placeholders: {
+                waitingPath: '<?=base_url('resources/image/fine-uploader/placeholders/waiting-generic.png')?>',
+                notAvailablePath: '<?=base_url('resources/image/fine-uploader/placeholders/not_available-generic.png')?>'
+            }
+        },
+        autoUpload: false,
+        validation: {
+            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png', 'swf', 'mp4']
+        }
+    });
+    $('#trigger-upload').click(function() {
+        $('#fine-uploader-gallery').fineUploader('uploadStoredFiles');
+   });
+</script>
+
+
 
 </body>
 </html>

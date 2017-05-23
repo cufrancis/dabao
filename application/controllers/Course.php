@@ -46,9 +46,9 @@ class Course extends CI_Controller {
         // print_r($data['videos']);
         $this->load->model('exam_model');
         $data['exams'] = $this->exam_model->get_exam($id);
-        foreach ($data['exams'] as $exam) {
-            $exam->select = json_decode($exam->select);
-        }
+        // foreach ($data['exams'] as $exam) {
+        //     $exam->select = json_decode($exam->select);
+        // }
         print_r($data['exams']);
 
         $this->load->view('header');
@@ -68,14 +68,75 @@ class Course extends CI_Controller {
         $this->load->view('footer');
     }
 
+    /**
+     * 考试答案
+     * @param [type] $course_id [description]
+     */
+    public function answer($course_id){
+        $this->load->model('user_model');
+        // $course = $this->course
+
+        $answer = $this->user_model->get_answers($course_id);
+        $answers = $this->db->select('*')->from('user_answers')->where('course_id', (int)$course_id)->get();
+
+        // print_r($answers->result());
+
+        $data['answers'] = $answers->result();
+
+        $this->load->view('course/answer', $data);
+
+        // print_r($answer);
+    }
+
+    public function exam($id){
+        $this->output->enable_profiler(TRUE);
+
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('title', 'Title', 'required');
+
+        if ($this->input->post('title') == NULL){
+            $this->load->view('course/exam');
+        } else {
+            print("Hello");
+
+    		$info = array(
+                'course_id' => $id,
+    			'title' => $this->input->post('title'),
+    			'a' => $this->input->post('a'),
+                'b' => $this->input->post('b'),
+    			'c' => $this->input->post('c'),
+                'd' => $this->input->post('d')
+    		);
+            $this->load->database();
+            $result = $this->db->insert('exam', $info);
+
+            print_r($result);
+
+			$this->load->library('session');
+
+			if ($result){
+				$this->session->message = '注册成功！';
+				$this->session->mark_as_flash('message');
+				redirect(site_url('teacher/course'));
+			}else {
+				$this->session->message = '注册失败，请联系管理员';
+				$this->session->mark_as_flash('message');
+			}
+
+        }
+    }
+
+
+
     // 编辑
     public function edit($id){
         $id = (int)$id;
 
         // 权限认证,不满足抛出异常
-        $this->load->library('Auth');
-        $this->auth->is_teacher();
-        $this->auth->check_owner($id);
+        // $this->load->library('Auth');
+        // $this->auth->is_teacher();
+        // $this->auth->check_owner($id);
         $this->output->enable_profiler(TRUE);
 
 

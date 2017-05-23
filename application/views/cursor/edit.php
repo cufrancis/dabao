@@ -47,7 +47,11 @@
     ====================================================================== -->
 
     <div id="fine-uploader-gallery" name="userfile"></div>
+
+
     <input type="submit" name="submit"/>
+
+
 </form>
 </div>
 

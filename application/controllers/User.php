@@ -308,5 +308,32 @@ class User extends CI_Controller {
 		}
 	}
 
+	public function add_answer($course_id){
+		// $this->output->enable_profiler(TRUE);
+
+	    if ($this->input->post() != null){
+	        // 插入数据库
+
+			$this->load->database();
+			$this->load->library('session');
+			foreach ($this->input->post() as $key => $value) {
+
+				if (!empty($this->db->select('*')->from('user_answers')->where('exam_id', $key)->where('user_id', $this->session->user['id'])->get()->result())){
+
+					$this->db->where('user_id', $this->session->user['id']);
+					$this->db->where('exam_id', $key);
+					$this->db->update('user_answers', array('course_id'=>$course_id,'exam_id'=>$key, 'answer'=>$value, 'user_id'=>$this->session->user['id']));
+				} else {
+					$this->db->insert('user_answers',array('course_id'=>$course_id,'exam_id'=>$key, 'answer'=>$value, 'user_id'=>$this->session->user['id']));
+				}
+
+			}
+			print("提交成功");
+	    } else {
+			redirect(site_url('course/'.$course_id));
+		}
+	}
+
+
 
 }

@@ -68,12 +68,14 @@
                 <div class="pull-right course-infobox-price">
 
                 </div>
-                <video id="video" preload class="video-js" controls preload="auto" width="640" height="264" poster="MY_VIDEO_POSTER.jpg" data-setup="{}" video-id="<?=$videos[0]->id;?>">
-                    <source src="<?=base_url('uploads/'.$videos[0]->url)?>" type='video/mp4'>
-                    <source src="MY_VIDEO.webm" type='video/webm'>
-                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                    </p>
-              </video>
+                <?php if($videos):?>
+                    <video id="video" preload class="video-js" controls preload="auto" width="640" height="264" poster="MY_VIDEO_POSTER.jpg" data-setup="{}" video-id="<?=$videos[0]->id;?>">
+                        <source src="<?=base_url('uploads/'.$videos[0]->url)?>" type='video/mp4'>
+                        <source src="MY_VIDEO.webm" type='video/webm'>
+                        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                        </p>
+                  </video>
+              <?php endif;?>
 
 
 
@@ -100,23 +102,27 @@
 
             <div role="tabpanel" class="tab-pane active" id="labs">
 
-<?php $i=1; foreach ($videos as $video): ?>
-    <div class="lab-item ">
-        <div class="lab-item-status">
-            <?php if($video->isWatch):?>
-                <img src="https://static.shiyanlou.com/img/lab-ok.png">
-            <?php else:?>
-                <img src="https://static.shiyanlou.com/img/lab-not-ok.png">
-            <?php endif;?>
+<?php if($videos):?>
+    <?php $i=1; foreach ($videos as $video): ?>
+        <div class="lab-item ">
+            <div class="lab-item-status">
+                <?php if($video->isWatch):?>
+                    <img src="https://static.shiyanlou.com/img/lab-ok.png">
+                <?php else:?>
+                    <img src="https://static.shiyanlou.com/img/lab-not-ok.png">
+                <?php endif;?>
+            </div>
+            <div class="lab-item-index">第<?=$i++?>节</div>
+            <div class="lab-item-title" title="<?=$video->name?>"><?=$video->name?></div>
+            <div class="pull-right lab-item-ctrl">
+                                 <!--<a class="btn btn-default" href="/courses/63/labs/291/document" target="_blank">查看文档</a>-->
+                <a class="video_click btn btn-primary   lab-item-start" data-id="<?=$video->id?>">开始观看</a>
+            </div>
         </div>
-        <div class="lab-item-index">第<?=$i++?>节</div>
-        <div class="lab-item-title" title="<?=$video->name?>"><?=$video->name?></div>
-        <div class="pull-right lab-item-ctrl">
-                             <!--<a class="btn btn-default" href="/courses/63/labs/291/document" target="_blank">查看文档</a>-->
-            <a class="video_click btn btn-primary   lab-item-start" data-id="<?=$video->id?>">开始观看</a>
-        </div>
-    </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
+<?php else:?>
+    视频列表为空
+<?php endif;?>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="exam">
@@ -131,14 +137,25 @@
                     </div>
                 <?php else:?>
                     <?php $i = 1;?>
+                    <form action="<?=site_url('user/'.$course->id.'/add_answer')?>" method="POST">
                     <?php foreach ($exams as $exam): ?>
-                        <p><?=$i++?>.<?=$exam->title?></p>
-                        <?php foreach ($exam->select as $key => $value): ?>
+                        <p><?=$i++?>. <?=$exam->title?></p>
+                <fieldset class="form-group">
+                    <label for="exampleSelect1"></label>
+                    <select class="form-control" id="exampleSelect1" name="<?=$exam->id?>">
+                      <option value="a"><?=$exam->a?></option>
+                      <option value="b"><?=$exam->b?></option>
+                      <option value="c"><?=$exam->c?></option>
+                      <option value="d"><?=$exam->d?></option>
+                    </select>
+                  </fieldset>
 
-<div class="lab-item-title"><input type="radio" name="sex" value="male"><?=$key?>.<?=$value?>
-                            </div>
-                        <?php endforeach; ?>
                     <?php endforeach; ?>
+                    <fieldset class="form-group">
+                        <br /><input type="submit" value="提交">
+                    </fieldset>
+
+                </form>
                 <?php endif; ?>
 
             </div>

@@ -45,7 +45,7 @@ CREATE TABLE `cursor` (
 
 LOCK TABLES `cursor` WRITE;
 /*!40000 ALTER TABLE `cursor` DISABLE KEYS */;
-INSERT INTO `cursor` VALUES (1,'计算机',1,NULL,NULL,NULL,2,'This is Computer course',1,0,'img/computer.png',0),(2,'数学',0,NULL,NULL,NULL,2,NULL,0,0,'img/math.jpg',0),(5,'化学',2,0,0,0,1,'主要介绍化学的反应原理（包括动力学原理和热力学原理），内容与现今国内的大学一年级相关专业学生所用教材紧密对应，较为全面。',1,0,'img/Chemistry.jpg',0);
+INSERT INTO `cursor` VALUES (1,'计算机',1,NULL,NULL,NULL,1,'This is Computer course',1,0,'img/computer.png',0),(2,'数学',0,NULL,NULL,NULL,1,NULL,0,0,'img/math.jpg',0),(5,'化学',2,0,0,0,1,'主要介绍化学的反应原理（包括动力学原理和热力学原理），内容与现今国内的大学一年级相关专业学生所用教材紧密对应，较为全面。',1,0,'img/Chemistry.jpg',0);
 /*!40000 ALTER TABLE `cursor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,9 +87,12 @@ CREATE TABLE `exam` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `course_id` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `select` text,
+  `a` varchar(45) DEFAULT NULL,
+  `b` varchar(45) DEFAULT NULL,
+  `c` varchar(45) DEFAULT NULL,
+  `d` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +101,7 @@ CREATE TABLE `exam` (
 
 LOCK TABLES `exam` WRITE;
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
-INSERT INTO `exam` VALUES (1,1,'十进制数123转换成二进制数是:','{\"A\":\"111111\", \"B\":\"111110\", \"C\":\"1111011\",\"D\":\"1111001\"}'),(2,1,'计算机科学的奠基人是','{\"A\":\"查尔斯·巴贝奇\",\"B\":\"图灵\",\"C\":\"阿塔诺索夫\",\"D\":\"冯·诺依曼\"}');
+INSERT INTO `exam` VALUES (1,1,'十进制数123转换成二进制数是:','111111','111100','110011','111101'),(2,1,'计算机科学的奠基人是','查尔斯·巴贝','answer b','answer c','answer d'),(3,5,'测试题目','答案啊','','',''),(4,5,'测试题目','答案a','答案B','答案C','答案D'),(5,1,'1+1','1','2','3','4');
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +151,7 @@ CREATE TABLE `teacher` (
 
 LOCK TABLES `teacher` WRITE;
 /*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
-INSERT INTO `teacher` VALUES (1,'TeacherLuo','1234','                资深PHP工程师, 拥有多年PHP网站开发实际经验, 热衷于主流PHP框架和开源产品的研究.'),(2,'TeacherB','1234',NULL);
+INSERT INTO `teacher` VALUES (1,'xiaojie','1234','                资深PHP工程师, 拥有多年PHP网站开发实际经验, 热衷于主流PHP框架和开源产品的研究.'),(2,'TeacherB','1234',NULL);
 /*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,8 +182,35 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (4,'llnhhy','1234','00000000',1,1,1,NULL,1494419812),(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1494419542);
+INSERT INTO `user` VALUES (4,'llnhhy','1234','00000000',1,1,1,NULL,1495542230),(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1494419542);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_answers`
+--
+
+DROP TABLE IF EXISTS `user_answers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_answers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `exam_id` int(11) DEFAULT NULL,
+  `answer` varchar(45) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_answers`
+--
+
+LOCK TABLES `user_answers` WRITE;
+/*!40000 ALTER TABLE `user_answers` DISABLE KEYS */;
+INSERT INTO `user_answers` VALUES (9,1,'a',4,1),(10,2,'b',4,1);
+/*!40000 ALTER TABLE `user_answers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -296,4 +326,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-10 21:33:16
+-- Dump completed on 2017-05-23 21:36:04

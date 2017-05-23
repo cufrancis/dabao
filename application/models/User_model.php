@@ -31,6 +31,16 @@ class User_model extends CI_Model{
         }
     }
 
+    public function get_answers($course_id){
+        $query = $this->db->select('*')->from('user_answers')->where('course_id', (int)$course_id)->get();
+
+        if ($query){
+            return $query->result();
+        } else {
+            return False;
+        }
+    }
+
     /**
      * 更新本次登陆时间
      * @var [type]

@@ -87,6 +87,11 @@ $route['exam/(\d+)'] = 'exam/index/$1';
 $route['user/(\d+)'] = 'user/index/$1';
 
 // 教师端
-// $route['teacher/login'] = 'teacher/login';
-// $route['teacher/logout'] = 'teacher/logout';
-// $route['teacher/register'] = 'teacher/register'
+$route['teacher/$1'] = 'teacher/index/$1';
+$route['teacher/login'] = 'teacher/login';
+$route['teacher/logout'] = 'teacher/logout';
+$route['teacher/register'] = 'teacher/register';
+
+$route['course/(\d+)/answer'] = 'course/answer/$1';
+$route['course/(\d+)/exam'] = 'course/exam/$1';
+$route['user/(\d+)/add_answer'] = 'user/add_answer/$1';

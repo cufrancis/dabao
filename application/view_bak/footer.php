@@ -14,18 +14,6 @@
 <!-- If you'd like to support IE8 -->
 <script src="https://cdn.bootcss.com/video.js/6.0.1/ie8/videojs-ie8.js"></script>
 
-<script type="text/javascript">
-// 时间设置
-    $(".time p").html(moment().format("LLLL"))
-    // var date = new Date(1398250549490);
-    // Y = date.getFullYear() + '-';
-    // M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    // D = date.getDate() + ' ';
-    // h = date.getHours() + ':';
-    // m = date.getMinutes() + ':';
-    // s = date.getSeconds();
-</script>
-
 <script>
     $('#fine-uploader-gallery').fineUploader({
         debug: true,
