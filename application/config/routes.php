@@ -70,7 +70,12 @@ $route['course/(\d+)/update'] = 'course/update/$1';
 
 // 上传视频
 $route['course/(\d+)/upload'] = 'course/upload/$1';
-
+// 上传课后作业
+$route['course/(\d+)/upload_homework'] = 'course/upload_homework/$1';
+// 教师添加课后作业
+$route['course/(\d+)/homework'] = 'course/homework/$1';
+$route['user/(\d+)/homework'] = 'user/homework/$1';
+$route['course/(\d+)/user_homework'] = 'course/user_homework/$1';
 // 添加评论
 $route['course/comment/add'] = 'course/comment_add';
 

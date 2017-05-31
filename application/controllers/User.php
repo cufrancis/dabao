@@ -334,6 +334,19 @@ class User extends CI_Controller {
 		}
 	}
 
+	/**
+	 * 返回该门课程学生所上传的课后作业
+	 * @param [type] $course_id [description]
+	 */
+	public function homework($course_id){
+		$this->load->database();
+		$this->load->library('session');
+		$this->load->model('user_model');
+
+		$query = $this->user_model->homework($this->session->user['id'], $course_id);
+		print_r($query);
+	}
+
 
 
 }

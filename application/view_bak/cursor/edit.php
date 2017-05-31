@@ -121,3 +121,32 @@
 
     <!-- Your code to create an instance of Fine Uploader and bind to the DOM/template
     ====================================================================== -->
+<script type="text/javascript">
+$('#fine-uploader-gallery').fineUploader({
+    debug: true,
+    template: 'qq-template-gallery',
+    request: {
+        endpoint: '<?=site_url('course/'.$course->id.'/upload_homework')?>'
+    },
+    retry:{
+        enableAuto: true,
+    },
+    deleteFile: {
+        enabled: true, // defaults to false
+        endpoint: '<?=site_url('course/delete_homework')?>',
+    },
+    thumbnails: {
+        placeholders: {
+            waitingPath: '<?=base_url('resources/image/fine-uploader/placeholders/waiting-generic.png')?>',
+            notAvailablePath: '<?=base_url('resources/image/fine-uploader/placeholders/not_available-generic.png')?>'
+        }
+    },
+    autoUpload: false,
+    validation: {
+        allowedExtensions: ['doc', 'txt']
+    }
+});
+$('#trigger-upload').click(function() {
+    $('#fine-uploader-gallery').fineUploader('uploadStoredFiles()');
+});
+</script>

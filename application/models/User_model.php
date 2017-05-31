@@ -31,6 +31,33 @@ class User_model extends CI_Model{
         }
     }
 
+    /**
+     * 返回当前登陆用户指定课程的课后作业
+     * @param [type] $user_id   [description]
+     * @param [type] $course_id [description]
+     */
+    public function homework($user_id, $course_id){
+        $query = $this->db->select('*')->from('homework')->where('course_id', (int)$course_id)->where('user_id', (int)$user_id)->get();
+
+        if ($query) {
+            return $query->result();
+        }else{
+            return False;
+        }
+    }
+
+    // public function get_user_homework($)
+
+    public function get_homeworks($course_id){
+        $query = $this->db->select('*')->from('homework')->where('course_id', (int)$course_id)->get();
+
+        if ($query){
+            return $query->result();
+        } else {
+            return False;
+        }
+    }
+
     public function get_answers($course_id){
         $query = $this->db->select('*')->from('user_answers')->where('course_id', (int)$course_id)->get();
 

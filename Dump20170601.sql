@@ -35,6 +35,7 @@ CREATE TABLE `cursor` (
   `study` int(11) DEFAULT '0',
   `img` varchar(45) DEFAULT NULL,
   `star` int(11) DEFAULT '0',
+  `homework` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -45,7 +46,7 @@ CREATE TABLE `cursor` (
 
 LOCK TABLES `cursor` WRITE;
 /*!40000 ALTER TABLE `cursor` DISABLE KEYS */;
-INSERT INTO `cursor` VALUES (1,'计算机',1,NULL,NULL,NULL,1,'This is Computer course',1,0,'img/computer.png',0),(2,'数学',0,NULL,NULL,NULL,1,NULL,0,0,'img/math.jpg',0),(5,'化学',2,0,0,0,1,'主要介绍化学的反应原理（包括动力学原理和热力学原理），内容与现今国内的大学一年级相关专业学生所用教材紧密对应，较为全面。',1,0,'img/Chemistry.jpg',0);
+INSERT INTO `cursor` VALUES (1,'计算机',1,NULL,NULL,NULL,1,'This is Computer course',1,0,'img/computer.png',0,'Test homeworks'),(2,'数学',0,NULL,NULL,NULL,1,NULL,0,0,'img/math.jpg',0,NULL),(5,'化学',2,0,0,0,1,'主要介绍化学的反应原理（包括动力学原理和热力学原理），内容与现今国内的大学一年级相关专业学生所用教材紧密对应，较为全面。',1,0,'img/Chemistry.jpg',0,NULL);
 /*!40000 ALTER TABLE `cursor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,6 +104,33 @@ LOCK TABLES `exam` WRITE;
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
 INSERT INTO `exam` VALUES (1,1,'十进制数123转换成二进制数是:','111111','111100','110011','111101'),(2,1,'计算机科学的奠基人是','查尔斯·巴贝','answer b','answer c','answer d'),(3,5,'测试题目','答案啊','','',''),(4,5,'测试题目','答案a','答案B','答案C','答案D'),(5,1,'1+1','1','2','3','4');
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homework`
+--
+
+DROP TABLE IF EXISTS `homework`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `homework` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homework`
+--
+
+LOCK TABLES `homework` WRITE;
+/*!40000 ALTER TABLE `homework` DISABLE KEYS */;
+INSERT INTO `homework` VALUES (7,1,4,'./uploads/homework/Test_Document2.doc','Test_Document2.doc');
+/*!40000 ALTER TABLE `homework` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -182,7 +210,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (4,'llnhhy','1234','00000000',1,1,1,NULL,1495542230),(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1494419542);
+INSERT INTO `user` VALUES (4,'llnhhy','1234','00000000',1,1,1,NULL,1496245219),(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1494419542);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -326,4 +354,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-23 21:36:04
+-- Dump completed on 2017-06-01  1:57:08

@@ -446,35 +446,6 @@
     // s = date.getSeconds();
 </script>
 
-<script>
-    $('#fine-uploader-gallery').fineUploader({
-        debug: true,
-        template: 'qq-template-gallery',
-        request: {
-            endpoint: '<?=site_url('course/'.$cursor->id.'/upload')?>'
-        },
-        retry:{
-            enableAuto: true,
-        },
-        deleteFile: {
-            enabled: true, // defaults to false
-            endpoint: '/my/delete/endpoint',
-        },
-        thumbnails: {
-            placeholders: {
-                waitingPath: '<?=base_url('resources/image/fine-uploader/placeholders/waiting-generic.png')?>',
-                notAvailablePath: '<?=base_url('resources/image/fine-uploader/placeholders/not_available-generic.png')?>'
-            }
-        },
-        autoUpload: false,
-        validation: {
-            allowedExtensions: ['jpeg', 'jpg', 'gif', 'png', 'swf', 'mp4']
-        }
-    });
-    $('#trigger-upload').click(function() {
-        $('#fine-uploader-gallery').fineUploader('uploadStoredFiles');
-   });
-</script>
 
 
 

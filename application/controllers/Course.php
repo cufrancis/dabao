@@ -49,10 +49,10 @@ class Course extends CI_Controller {
         // foreach ($data['exams'] as $exam) {
         //     $exam->select = json_decode($exam->select);
         // }
-        print_r($data['exams']);
+        $data['homeworks'] = $this->user_model->homework($this->session->user['id'], $id);
+        // print_r($data);
 
         $this->load->view('header');
-        // $this->load->view('cursor/index', $data);
         $this->load->view('course/index', $data);
         $this->load->view('footer');
     }
@@ -125,6 +125,68 @@ class Course extends CI_Controller {
 			}
 
         }
+    }
+
+    /**
+     * 添加课后作业
+     * @param [type] $course_id [description]
+     */
+    public function homework($course_id){
+        $this->output->enable_profiler(TRUE);
+        $this->load->model('course_model');
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('homework', 'Homework', 'required');
+
+        if ($this->input->post('homework') == NULL){
+            $data['homework'] = $this->course_model->get_homework($course_id);
+            // print_r($data);
+            $this->load->view('course/homework', $data);
+        } else {
+            $data = array(
+                'homework' => $this->input->post('homework')
+            );
+            $result = $this->course_model->update((int)$course_id, $data);
+
+            print_r($result);
+
+            $this->load->library('session');
+
+            if ($result){
+                $this->session->message = '失败';
+                $this->session->mark_as_flash('message');
+                redirect(site_url('teacher/course'));
+            }else {
+                $this->session->message = '失败，请联系管理员';
+                $this->session->mark_as_flash('message');
+            }
+
+        }
+    }
+
+    /**
+     * 该课程所有的 课后作业
+     * @param [type] $course_id [description]
+     */
+    public function user_homework($course_id){
+        $this->load->model('user_model');
+        $this->load->model('course_model');
+        // $course = $this->course
+
+        $homeworks = $this->user_model->get_homeworks($course_id);
+        // $answers = $this->db->select('*')->from('user_answers')->where('course_id', (int)$course_id)->get();
+
+        foreach ($homeworks as $homework) {
+            // print($homework->user_id);
+            $homework->user = $this->user_model->getUserInfo($homework->user_id);
+            $homework->course = $this->course_model->getCourseInfo($homework->course_id);
+        }
+
+        $data['homeworks'] = $homeworks;
+
+        print_r($data);
+        $this->load->view('course/homeworks', $data);
+
     }
 
 
@@ -260,6 +322,48 @@ class Course extends CI_Controller {
             // echo json_encode($this->upload->data());
             echo json_encode(array('success'=>true));
         }
+    }
+
+    /**
+     * 学生上传课后作业
+     */
+    public function upload_homework($course_id){
+        $config['upload_path']      = './uploads/homework/';
+        $config['allowed_types']    = 'doc|txt';
+        // $config['max_size']     = 100;
+        // $config['max_width']        = 1024;
+        // $config['max_height']       = 768;
+
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+
+        $this->load->model('course_model');
+        $this->load->library('session');
+
+        if (!$this->upload->do_upload('qqfile')){
+            $error = array('error' => $this->upload->display_errors());
+            echo json_encode(array('success'=>false));
+        } else {
+            // $data = array('upload_data' => $this->upload->data());
+            $data = array(
+                'homework' => $this->upload->data(),
+                'user_id' => $this->session->user['id'],
+                'course_id' => $course_id
+            );
+            // // $this->cursor_model->add_video($cursor_id, $this->upload->data());
+            $this->course_model->add_homework($data);
+            // echo json_encode($this->upload->data());
+            echo json_encode(array('success'=>true, 'data'=>$this->upload));
+        }
+    }
+
+    /**
+     * 删除上传的课后作业
+     */
+    public function delete_homework(){
+        $this->load->library('upload');
+
+        print_r($this->upload);
     }
 
         /**

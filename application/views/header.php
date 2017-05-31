@@ -25,7 +25,10 @@
     <link rel="stylesheet" href="https://static.shiyanlou.com/static/highlight.js/9.9.0/css/monokai-sublime.min.css">
 	<link href="https://cdn.bootcss.com/video.js/6.0.1/video-js.css" rel="stylesheet">
 
+	
+	<link href="<?=base_url('resources/js/fine-uploader/fine-uploader-new.css')?>" rel="stylesheet">
     <link rel="stylesheet" href="<?=base_url('resources/app/dist/css/styles.css')?>">
+
 
 	<style>
 		@font-face {

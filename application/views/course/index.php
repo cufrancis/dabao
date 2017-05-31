@@ -69,9 +69,9 @@
 
                 </div>
                 <?php if($videos):?>
-                    <video id="video" preload class="video-js" controls preload="auto" width="640" height="264" poster="MY_VIDEO_POSTER.jpg" data-setup="{}" video-id="<?=$videos[0]->id;?>">
+                    <video id="video" preload class="video-js" controls preload="auto" width="640" height="264"  data-setup="{}" video-id="<?=$videos[0]->id;?>">
                         <source src="<?=base_url('uploads/'.$videos[0]->url)?>" type='video/mp4'>
-                        <source src="MY_VIDEO.webm" type='video/webm'>
+
                         <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
                         </p>
                   </video>
@@ -95,6 +95,9 @@
             </li>
             <li role="presentation">
                 <a href="#exam" class="stat-event" data-stat="course_report" aria-controls="reports" role="tab" data-toggle="tab">课前预习</a>
+            </li>
+            <li role="presentation">
+                <a href="#after_school" class="stat-event" data-stat="course_report" aria-controls="reports" role="tab" data-toggle="tab">课后</a>
             </li>
 
 		</ul>
@@ -149,14 +152,26 @@
                       <option value="d"><?=$exam->d?></option>
                     </select>
                   </fieldset>
-
                     <?php endforeach; ?>
                     <fieldset class="form-group">
                         <br /><input type="submit" value="提交">
                     </fieldset>
-
                 </form>
                 <?php endif; ?>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="after_school">
+                <h3>作业题目:</h3>
+                <h5><?=$course->homework?></h5>
+                <hr />
+                <h3>我上传的作业:</h3>
+                <?php $i=0;?>
+                <?php foreach ($homeworks as $homework): ?>
+                    <h5><?=++$i;?>.<a href="<?=base_url($homework->path)?>"><?=$homework->name?></a></h5>
+                <?php endforeach; ?>
+
+
+                <div id="fine-uploader-gallery" name="userfile"></div>
 
             </div>
 		</div>
@@ -203,7 +218,7 @@
                                 <div class="comment-item-content markdown-box">
                                     <p><?=$comment->text?></p>
                                 </div>
-                                <div class="comment-item-date">1周前</div><div class="comment-item-lab">来自：<?=$course->name?></div><div class="comment-item-reply" data-pid="17049"><img src="/static/img/trylab/icon-reply.png" alt="">回复</div></div></div>
+                                <div class="comment-item-date">1周前</div><div class="comment-item-lab">来自：<?=$course->name?></div><div class="comment-item-reply" data-pid="17049"><img src="<?=base_url('resources/img/icon-reply.png')?>" alt="">回复</div></div></div>
                         <?php endforeach; ?>
 
                     </div>
@@ -591,31 +606,108 @@
 
 
 
-<div class="modal fade" id="paid-modal" tabindex="-1" role="dialog" data-backdrop="static">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" style="text-align:center;">支付确认</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <button class="btn btn-primary paid-confirm" type="button">支付成功</button>
-                    </div>
-                    <div class="col-md-6">
-                        <button class="btn btn-primary paid-method" type="button" style="background:none; color:#0c9">选择支付方式</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
+<script src="<?=base_url('resources/js/jquery.cxselect.js')?>"></script>
+<script src="<?=base_url('resources/js/fine-uploader/jquery.fine-uploader.min.js')?>"></script>
 <script src="https://cdn.bootcss.com/video.js/6.0.1/video.js"></script>
-<script type="text/javascript">
+
+<!-- Fine Uploader Gallery template
+    ====================================================================== -->
+<script type="text/template" id="qq-template-gallery">
+    <div class="qq-uploader-selector qq-uploader qq-gallery" qq-drop-area-text="Drop files here">
+        <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
+            <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
+        </div>
+        <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+            <span class="qq-upload-drop-area-text-selector"></span>
+        </div>
 
 
-    // check_watch_end();
+            <div class="qq-upload-button-selector qq-upload-button">
+                <div>Select files</div>
+            </div>
+            <button type="button" id="trigger-upload" class="btn btn-primary">
+                <i class="icon-upload icon-white"></i> Upload
+            </button>
+
+        <span class="qq-drop-processing-selector qq-drop-processing">
+            <span>Processing dropped files...</span>
+            <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+        </span>
+        <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
+            <li>
+                <div class="qq-progress-bar-container-selector">
+                    <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+                </div>
+                <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                <img class="qq-thumbnail-selector" qq-max-size="100" qq-server-scale>
+                <span class="qq-upload-file-selector qq-upload-file"></span>
+                <span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>
+                <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                <span class="qq-upload-size-selector qq-upload-size"></span>
+                <button type="button" class="qq-btn qq-upload-cancel-selector qq-upload-cancel">Cancel</button>
+                <button type="button" class="qq-btn qq-upload-retry-selector qq-upload-retry">Retry</button>
+                <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">Delete</button>
+                <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+            </li>
+        </ul>
+
+        <dialog class="qq-alert-dialog-selector">
+            <div class="qq-dialog-message-selector"></div>
+            <div class="qq-dialog-buttons">
+                <button type="button" class="qq-cancel-button-selector">Close</button>
+            </div>
+        </dialog>
+
+        <dialog class="qq-confirm-dialog-selector">
+            <div class="qq-dialog-message-selector"></div>
+            <div class="qq-dialog-buttons">
+                <button type="button" class="qq-cancel-button-selector">No</button>
+                <button type="button" class="qq-ok-button-selector">Yes</button>
+            </div>
+        </dialog>
+
+        <dialog class="qq-prompt-dialog-selector">
+            <div class="qq-dialog-message-selector"></div>
+            <input type="text">
+            <div class="qq-dialog-buttons">
+                <button type="button" class="qq-cancel-button-selector">Cancel</button>
+                <button type="button" class="qq-ok-button-selector">Ok</button>
+            </div>
+        </dialog>
+    </div>
+</script>
+<script>
 
 
+var manualUploader = new qq.FineUploader({
+        element: document.getElementById('fine-uploader-gallery'),
+        template: 'qq-template-gallery',
+        request: {
+            endpoint: '<?=site_url('course/'.$course->id.'/upload_homework')?>'
+        },
+        retry:{
+            enableAuto: true,
+        },
+        deleteFile: {
+            enabled: false, // defaults to false
+            endpoint: '<?=site_url('course/delete_homework')?>',
+        },
+        thumbnails: {
+            placeholders: {
+                waitingPath: '<?=base_url('resources/image/fine-uploader/placeholders/waiting-generic.png')?>',
+                notAvailablePath: '<?=base_url('resources/image/fine-uploader/placeholders/not_available-generic.png')?>'
+            }
+        },
+        autoUpload: false,
+        debug: true,
+        validation: {
+            allowedExtensions: ['doc', 'txt']
+        }
+    });
+
+    qq(document.getElementById("trigger-upload")).attach("click", function() {
+        manualUploader.uploadStoredFiles();
+    });
 </script>

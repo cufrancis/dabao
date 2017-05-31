@@ -66,7 +66,7 @@ class Teacher extends CI_Controller {
 		$this->load->database();
 		$this->load->library('session');
 
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 
 		// 获取该教师发布的所有课程
 		$query = $this->db->select('*')
