@@ -1,1 +1,3 @@
-uploads/*
+uploads/*.mp4
+uploads/homework/*.doc
+uploads/homework/*.txt
