@@ -4,12 +4,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Teacher extends CI_Controller {
 
-	public function index(){
+	public function courses(){
+		$this->load->library('Auth');
 
-	}
+		$this->auth->check_login();
+		// $this->auth->is_teacher();
 
-	public function is_login(){
+		# 教师所创建的课程列表
+		$this->load->database();
+		$this->load->library('session');
 
+		$this->output->enable_profiler(TRUE);
+
+		// 获取该教师发布的所有课程
+		$query = $this->db->select('*')
+							->from('cursor')
+							->where('teacher_id', $this->session->teacher['id'])
+							->get();
+
+		$courses = $query->result();
+		$this->load->model('teacher_model');
+		foreach ($courses as $course) {
+			$course->teacher = $this->teacher_model->get_info($course->teacher_id);
+		}
+
+		$data['courses'] = $courses;
+
+		$this->load->view('teacher/header');
+        $this->load->view('teacher/courses', $data);
+		$this->load->view('teacher/footer');
 	}
 
 	public function login(){
@@ -23,9 +46,9 @@ class Teacher extends CI_Controller {
 
 
 		if ($this->form_validation->run() == FALSE){
-			$this->load->view('header');
+			// $this->load->view('teacher/header');
 	        $this->load->view('teacher/login');
-			$this->load->view('footer');
+			$this->load->view('teacher/footer');
 		} else {
 			//  从表单中获取用户名和密码
 			$username = $this->input->post('username');
@@ -52,21 +75,21 @@ class Teacher extends CI_Controller {
 			// 设置登录成功提示，并标记为flashdata数据（只显示一次的session数据，具体看ci的session类库）
 			// $this->session->message = '登录成功！';
 			// $this->session->mark_as_flash('msessage');
-			redirect(site_url('/teacher/course'));
+			redirect(site_url('/teacher/index'));
 		}
     }
 
-	public function course(){
+	public function index(){
 		$this->load->library('Auth');
 
-		$this->auth->check_login();
+		$this->auth->authenticated('teacher');
 		// $this->auth->is_teacher();
 
 		# 教师所创建的课程列表
 		$this->load->database();
 		$this->load->library('session');
 
-		// $this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(TRUE);
 
 		// 获取该教师发布的所有课程
 		$query = $this->db->select('*')
@@ -75,12 +98,14 @@ class Teacher extends CI_Controller {
 							->get();
 
 		$data['courses'] = $query->result();
+		print_r($data);
+
 		// foreach ($query->result() as $row){
 		// 	echo $row->name;
 		// }
-		// $this->load->view('header');
-		$this->load->view('teacher/course', $data);
-		// $this->load->view('footer');
+		$this->load->view('teacher/header');
+		$this->load->view('teacher/index', $data);
+		$this->load->view('teacher/footer');
 	}
 	/**
 	 * 退出登录
@@ -92,6 +117,6 @@ class Teacher extends CI_Controller {
 		$this->session->message = '注销成功！';
 		$this->session->mark_as_flash('message');
 		$this->load->helper('url');
-		redirect(site_url());
+		redirect(site_url('teacher'));
 	}
 }

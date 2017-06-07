@@ -92,7 +92,9 @@ $route['exam/(\d+)'] = 'exam/index/$1';
 $route['user/(\d+)'] = 'user/index/$1';
 
 // 教师端
-$route['teacher/$1'] = 'teacher/index/$1';
+// $route['teacher/$1'] = 'teacher/index/$1';
+$route['teacher'] = 'teacher/index';
+$route['teacher/courses'] = 'teacher/courses';
 $route['teacher/login'] = 'teacher/login';
 $route['teacher/logout'] = 'teacher/logout';
 $route['teacher/register'] = 'teacher/register';

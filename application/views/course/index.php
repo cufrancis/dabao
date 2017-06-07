@@ -5,12 +5,6 @@
 <ol class="breadcrumb">
     <li><a href="<?=site_url('courses')?>">全部课程</a></li>
 
-    <li>
-
-    <a href="/courses/?tag=C%2FC%2B%2B">C/C++</a>
-
-    </li>
-
     <li class="active">
         <a href="<?=site_url('course/'.$course->id)?>">
         <?=$course->name?>
@@ -48,7 +42,7 @@
 
             </div>
 
-            <div class="course-infobox-progress">
+<!--            <div class="course-infobox-progress">
 
                     <div class="course-progress-finished"></div>
 
@@ -59,7 +53,7 @@
 
 
                 <span>（1/2）</span>
-            </div>
+            </div>-->
 
 
 
@@ -135,8 +129,7 @@
                 <?php endforeach; ?>
                 <?php if ($x == 0): ?>
                     <div class="vip-banner course-vip-banner ">
-                        <img src="https://static.shiyanlou.com/img/icon-vip.png">
-                        看完视频才显示试题
+                        <h3>看完视频才显示试题</h3>
                     </div>
                 <?php else:?>
                     <?php $i = 1;?>
@@ -194,7 +187,7 @@
                     <div class="comment-form">
 
                             <textarea class="comment-form-content" placeholder="输入您想说的话..."></textarea>
-                            <button class="pull-right btn btn-primary comment-form-add">发表评论</button>
+                            <button class="pull-right btn btn-primary comment-form-add" id="add-comment">发表评论</button>
                             <button class="pull-right btn btn-primary comment-form-reset">清除评论</button>
 
                     </div>
@@ -203,52 +196,28 @@
                         <?php foreach ($course->comments as $comment): ?>
                             <div class="row comment-list-item"><div class="col-md-1">
                                 <div class="user-avatar ">
-                                    <a class="avatar" href="/user/330341/" target="_blank">
+                                    <a class="avatar" href="<?=site_url('user/'.$comment->author->id)?>" target="_blank">
                                         <img src="https://dn-simplecloud.shiyanlou.com/gravatarPGXNKMB8DSCW.jpg?imageView2/1/w/200/h/200">
-                                    </a>
-                                    <a class="member-icon" href="/vip" target="_blank"><img src="https://static.shiyanlou.com/img/vip-icon.png">
                                     </a>
                                 </div>
                             </div>
+                            
                             <div class="col-md-11 comment-item-body">
                                 <div class="user-username">
-                                    <a class="username" href="/user/330341/" target="_blank"><?=$comment->author->username?></a>
+                                    <a class="username" href="<?=site_url('user/'.$comment->author->id)?>" target="_blank"><?=$comment->author->username?></a>
                                     <span class="user-level">L11</span>
                                 </div>
                                 <div class="comment-item-content markdown-box">
                                     <p><?=$comment->text?></p>
                                 </div>
-                                <div class="comment-item-date">1周前</div><div class="comment-item-lab">来自：<?=$course->name?></div><div class="comment-item-reply" data-pid="17049"><img src="<?=base_url('resources/img/icon-reply.png')?>" alt="">回复</div></div></div>
+                                <div class="comment-item-date">1周前</div><div class="comment-item-lab">来自：<?=$course->name?></div><div class="comment-item-reply" data-pid="17049"><img src="<?=base_url('resources/img/icon-reply.png')?>" alt="">回复</div>
+                            </div>
+                        </div>
                         <?php endforeach; ?>
 
                     </div>
                     <div class="pagination-container"></div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="reports">
-				<span class="lab-id active" data-lab-id="None">全部</span>
-
-
-
-
-                        <span class="lab-id" data-lab-id="291">第1节</span>
-
-
-
-                        <span class="lab-id" data-lab-id="292">第2节</span>
-
-
-                <div class="report-owner">
-                    <span class="owner-list" data-user-id="410849">我的报告</span> / <span class="owner-list active" data-user-id="None">所有报告</span>
-                </div>
-                <div class="row report-items"></div>
-                <div class="pagination-container"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="questions">
-                <a class="btn btn-success" data-toggle="modal" href="#askquestion">我要提问</a>
-                <hr>
-                <ul class="row question-items"></ul>
-                <div class="pagination-container"></div>
             </div>
         </div>
     </div>

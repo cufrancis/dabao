@@ -27,6 +27,33 @@ class Auth {
         }
     }
 
+    public function authenticated($type='student'){
+        $this->CI->load->library("session");
+
+        if($type == 'student'){
+            if (isset($this->CI->session->user)){
+                return true;
+            } else {
+                // $this->CI->load->helper('url');
+                // redirect(site_url('/'));
+                return false;
+                // redirect(site_url('/login'));
+            }
+        }else if ($type == 'teacher'){
+            if (isset($this->CI->session->teacher)){
+                return true;
+            } else {
+                // $this->CI->load->helper('url');
+                redirect(site_url('/teacher/login'));
+                return false;
+                // redirect(site_url('/login'));
+            }
+        } else {
+            redirect(site_url());
+        }
+
+    }
+
     /**
      * 已登录用户是否是教师
      * @return boolean [description]

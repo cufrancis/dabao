@@ -31,14 +31,15 @@ class Course_model extends CI_Model {
 
         $query = $this->db->select('*')->from('homework')->where('course_id', (int)$data['course_id'])->where('user_id', (int)$data['user_id'])->get();
 
-        if (empty(query)){
+        if (empty($query)){
             $this->db->insert('homework');
         } else {
             $this->db->where('course_id', $data['course_id']);
             $this->db->where('user_id', $data['user_id']);
             $this->db->update('homework');
         }
-        // $result = $this->db->insert('homework',$data);
+
+        $result = $this->db->insert('homework',$data);
 
         return $result;
     }

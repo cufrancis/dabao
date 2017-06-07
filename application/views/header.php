@@ -25,92 +25,14 @@
     <link rel="stylesheet" href="https://static.shiyanlou.com/static/highlight.js/9.9.0/css/monokai-sublime.min.css">
 	<link href="https://cdn.bootcss.com/video.js/6.0.1/video-js.css" rel="stylesheet">
 
-	
+
 	<link href="<?=base_url('resources/js/fine-uploader/fine-uploader-new.css')?>" rel="stylesheet">
     <link rel="stylesheet" href="<?=base_url('resources/app/dist/css/styles.css')?>">
-
-
-	<style>
-		@font-face {
-			font-family: "lantingxihei";
-			src: url("https://static.shiyanlou.com/fonts/FZLTCXHJW.TTF");
-		}
-
-        /* modal 模态框*/
-        #invite-user .modal-body {
-            overflow: hidden;
-        }
-		#invite-user .modal-body .form-label {
-			margin-bottom: 16px;
-			font-size:14px;
-		}
-		#invite-user .modal-body .form-invite {
-			width: 80%;
-			padding: 6px 12px;
-			background-color: #eeeeee;
-			border: 1px solid #cccccc;
-			border-radius: 5px;
-			float: left;
-			margin-right: 10px;
-		}
-		#invite-user .modal-body .msg-modal-style {
-			background-color: #7dd383;
-			margin-top: 10px;
-			padding: 6px 0;
-			text-align: center;
-			width: 100%;
-		}
-		#invite-user .modal-body .modal-flash {
-			position: absolute;
-			top: 53px;
-			right: 74px;
-			z-index: 999;
-		}
-		/* end modal */
-
-        .en-footer {
-            padding: 30px;
-            text-align: center;
-            font-size: 14px;
-        }
-		.banner-image{
-		  position: absolute;
-		  top:0;
-		  background-size: cover;
-		  z-index: 1 ;
-		  width: 100%;
-		  /*height: 300px;*/
-		  background:url(<?=base_url('resources/img/white.png')?>) center;
-		  /*background-color: #cccccb;*/
-		}
-		.banner{
-		    position: relative;;
-		    overflow: hidden;
-		    width: 100%;
-		    height: 300px;
-		    z-index: 2;
-		    top: 0;
-		    background: #cccccc;
-		}
-		.vip-banner {
-			position: absolute;
-		}
-
-    </style>
-
-
-
-
+	<link rel="stylesheet" href="<?=base_url('resources/css/styles.css')?>">
 
 </head>
 
 <body>
-
-
-
-
-
-
 
 <nav class="navbar navbar-default navbar-fixed-top home-header">
     <div class="container">
@@ -135,15 +57,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="active"><a href="/courses/">全部课程</a></li>
-                        <!--<li class=""><a href="/paths/">学习路径</a></li>
-                        <li class=" bootcamp"><a href="/bootcamp/">训练营</a></li>-->
                     </ul>
                 </li>
-
-                      <li class=""><a href="/user/410849/">我的课程</a></li>
-
-
-
+				<li class=""><a href="/user/410849/">我的课程</a></li>
             </ul>
 
 			<?php if (isset($this->session->user)):?>
@@ -172,29 +88,10 @@
                 </ul>
             <?php else: ?>
                 <ul class="nav navbar-nav navbar-right header-sign">
-                                <!--<li><a class="sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a></li>
-                                <li><a class="sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a></li>-->
 								<li><a class="sign-in" data-sign="signin" href="<?=site_url('/login')?>" data-toggle="modal">登录</a></li>
                                 <li><a class="sign-up" data-sign="signup" href="<?=site_url('register')?>" data-toggle="modal">注册</a></li>
                             </ul>
             <?php endif; ?>
-
-
-
-
-
-            <div id="search-box"
-                data-url="/search"
-                ></div>
-
-
-<!--                 <div id="header-learn-info"
-                    data-current-lab=""
-                    data-current-lab-name=""
-                    data-lab-continue-url=""
-                    data-view-all-url="/user/410849/"
-                    data-home-page="/user/410849/"
-                ></div> -->
 
         </div>
     </div>

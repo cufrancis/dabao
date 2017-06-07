@@ -16,8 +16,6 @@
             </div>
         </div>
         <div class="item">
-            <!-- <a href="https://www.shiyanlou.com/contests/lou6" target="_blank">
-            </a> -->
             <img src="<?=base_url('resources/img/build.jpg')?>">
             <div class="carousel-caption carousel-intro">
             </div>
@@ -245,7 +243,7 @@
             </div>
         </div>
         <div class="home-section-footer home-features-footer">
-            <a class="home-courses-btn" href="/courses/">开始学习</a>
+            <a class="home-courses-btn" href="<?=site_url('courses')?>">开始学习</a>
         </div>
     </div>
 </div>

@@ -27,15 +27,12 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->library('session');
 
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 		$this->load->model('cursor_model');
 		$data['courses'] = $this->cursor_model->get_courses(6);
-		// print_r($data['course']);
 
-		// $this->session->name = 'llnhhy';
 		$this->load->view('header');
 		$this->load->view('index/index', $data);
 		$this->load->view('footer');
-		// $this->load->view('welcome_message');
 	}
 }

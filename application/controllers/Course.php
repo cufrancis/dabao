@@ -4,13 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Course extends CI_Controller {
 
+    public function __construct(){
+        parent::__construct();
+        $this->load->library('Auth');
+    }
+
     public function index($id){
         $id = (int)$id;
         $this->load->database();
         // $this->output->enable_profiler(TRUE);
 
         $this->load->model('cursor_model');
-        // $this->load->model('user_model');
         $this->load->model('teacher_model');
 
         $cursor = $this->cursor_model->getCursorInfo($id);
@@ -22,17 +26,15 @@ class Course extends CI_Controller {
         $data['course']->teacher = $this->teacher_model->get_info($cursor->teacher_id);
         $data['course']->teacher->courses = $this->teacher_model->get_courses($cursor->teacher_id);
         $data['videos'] = $this->cursor_model->get_video_of_cursor($id);
-        // print_r($data['videos']);
+
         $this->load->model('user_model');
         foreach($data['videos'] as $video){
             if ($this->user_model->is_watch_video($this->session->user['id'], $video->id)){
-
                 $video->isWatch = 1;
             } else {
                 $video->isWatch = 0;
             }
         }
-        // print_r($data['videos']);
         $data['course']->comments = $this->cursor_model->get_all_comments($id);
 
         foreach ($data['course']->comments as $key => $value) {
@@ -366,13 +368,16 @@ class Course extends CI_Controller {
         print_r($this->upload);
     }
 
-        /**
-         * 添加评论
-         * @param [type] $cursor_id [description]
-         */
-        public function comment_add(){
+    /**
+     * 添加评论
+     * @param [type] $cursor_id [description]
+     */
+    public function comment_add(){
+        $this->load->library('Auth');
+
+        if($this->auth->authenticated() == true){
             // 从 ajax 传递的数据中取出 课程id
-            $cursor_id = $this->input->post('id');
+            $cursor_id = $this->input->post('course_id');
             // 加载课程模型类
             $this->load->model('cursor_model');
             // 构造数据数组，此 $data 数组将传给 models/Cursor_model.php/insert_comments() ，
@@ -397,7 +402,12 @@ class Course extends CI_Controller {
             } else {
                 echo json_encode("Error: add comment failed!");
             }
+        } else {
+            echo json_encode("請登錄後再評論");
         }
+
+    }
+
     /**
      * 检查 用户有没有看完课程中所有的视频
      * @return [type] 返回0表示课程中的视频都已看完，返回1表示有课程没看完
